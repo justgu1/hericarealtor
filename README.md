@@ -1,66 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# hericarealtor
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Plataforma imobiliária construída com Laravel + Inertia.js. Exibe listagens de imóveis, capta leads e sincroniza automaticamente com o perfil de agente no Zillow.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Camada | Tecnologia |
+|---|---|
+| Backend | Laravel 11, PHP 8.2 |
+| Frontend | Inertia.js + Vue 3 + Tailwind CSS |
+| Banco de dados | PostgreSQL 15 |
+| Cache / Queue | Redis |
+| Storage | MinIO (S3-compatível) |
+| Runtime | PHP-FPM + Supervisor (queue worker + scheduler) |
+| Imagem Docker | GHCR — `ghcr.io/justgu1/hericarealtor` |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Estrutura do projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+hericarealtor/
+├── app/
+│   ├── Http/Controllers/   ← controllers (Admin, Listing, Lead, Blog…)
+│   ├── Models/             ← Listing, Lead, Post, Review, Amenity…
+│   ├── Mail/               ← e-mails transacionais
+│   └── Enums/
+├── resources/
+│   └── js/                 ← páginas Vue via Inertia
+├── routes/
+│   ├── web.php             ← rotas públicas + painel admin
+│   └── api.php
+├── docker/
+│   ├── Dockerfile          ← multi-stage build (PHP-FPM + assets)
+│   ├── entrypoint.sh       ← migrações, otimizações, start supervisor
+│   └── supervisord.conf    ← PHP-FPM + queue worker + scheduler
+├── jobs/
+│   └── listings-updater/   ← scraper Python para o Zillow
+├── k8s/                    ← manifestos Kubernetes (base + overlays)
+├── workflows/              ← GitHub Actions (CI/CD → GHCR)
+├── docker-compose.yml      ← ambiente local completo
+└── .env.example            ← template de variáveis
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Funcionalidades
 
-## Laravel Sponsors
+### Área pública
+- **Home** — listagens em destaque, últimos posts, avaliações de clientes
+- **Properties** — busca e filtro de imóveis (venda, aluguel, vendidos)
+- **Property detail** — galeria, mapa, exportação em PDF
+- **Seller** — formulário para o agente cadastrar novos imóveis
+- **Neighborhood** — página informativa de bairros
+- **About / Contact** — informações do agente e formulário de lead
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Painel Admin (`/admin`)
+- Autenticação protegida por senha
+- Dashboard com resumo de leads e listagens
+- CRUD completo de listagens, amenidades e características
+- Gestão de leads (captação do site)
+- Gestão de avaliações de clientes
+- Gestão de blog (posts, categorias, tags)
+- Configurações do perfil
 
-### Premium Partners
+### Listings Updater (job Python)
+Scraper que sincroniza automaticamente com o perfil do agente no Zillow:
+- Obtém cookies de sessão via Chrome headless (`undetected-chromedriver`)
+- Contorna o challenge anti-bot (Press & Hold) via `ActionChains`
+- Busca listagens ativas, para alugar e vendidas
+- Atualização incremental — só processa o que é novo desde a última execução
+- Persiste na tabela `zillow_listings` (PostgreSQL)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## Ambiente local
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Pré-requisitos
+- Docker + Docker Compose
 
-## Code of Conduct
+### Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# 1. Clonar o repositório
+git clone git@github.com:justgu1/hericarealtor.git
+cd hericarealtor
 
-## Security Vulnerabilities
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
+# Edite .env: APP_KEY, DB_*, REDIS_PASSWORD, AWS_*, MAIL_*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Gerar APP_KEY
+docker compose run --rm app php artisan key:generate
 
-## License
+# 4. Subir os serviços
+docker compose up -d
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 5. Executar migrações e seeders
+docker compose exec app php artisan migrate --seed
+```
+
+### Listings Updater (local)
+
+```bash
+cd jobs/listings-updater
+cp .env.example .env
+# Preencha: ZILLOW_ENCODED_ZUID, ZILLOW_PROFILE_SLUG, DATABASE_URL
+
+# Sem Docker
+pip install -r requirements.txt
+USE_VIRTUAL_DISPLAY=false python -m app.main
+
+# Com Docker
+docker compose up listing-updater
+```
+
+---
+
+## CI/CD
+
+Todo push na branch `main` dispara o GitHub Actions:
+
+| Workflow | Trigger | Imagem publicada |
+|---|---|---|
+| `docker.yml` | Mudanças no app Laravel | `ghcr.io/justgu1/hericarealtor:latest` + `sha-<hash>` |
+| `docker-listings-updater.yml` | Mudanças em `jobs/listings-updater/` | `ghcr.io/justgu1/hericarealtor-listings-updater:latest` |
+
+> **Segredo necessário no repositório:** `GH_PAT` com permissão de escrita no repo `infra` (para atualizar a tag da imagem no deploy).
+
+---
+
+## Deploy em produção
+
+O deploy é gerenciado pelo repo [`infra`](https://github.com/justgu1/infra) via Docker Swarm.
+Consulte o README do `infra` para o guia completo de deploy na VPS.
+
+Em resumo:
+```bash
+# Na VPS, dentro do repo infra
+bash scripts/deploy-stack.sh hericarealtor
+```
+
+---
+
+## Variáveis de ambiente
+
+Veja o `.env.example` para a lista completa. Principais:
+
+| Variável | Descrição |
+|---|---|
+| `APP_KEY` | Gerado com `php artisan key:generate` |
+| `APP_ENV` | `local` ou `production` |
+| `DB_*` | Conexão PostgreSQL |
+| `REDIS_PASSWORD` | Senha do Redis |
+| `AWS_*` | Credenciais MinIO (S3-compatível) |
+| `MAIL_*` | Configuração SMTP |
+
+> ⚠️ **Nunca commite o `.env`** — ele está no `.gitignore`.
+
+---
+
+## Segurança
+
+- `.env` no `.gitignore` — nunca vai ao repositório
+- Segredos de produção gerenciados exclusivamente no servidor via variáveis de ambiente
+- Painel admin protegido por autenticação Laravel + middleware `auth`
+- Imagens Docker publicadas no GHCR (privado) via `GITHUB_TOKEN`
+- `GH_PAT` com escopo mínimo necessário (write no repo infra apenas)
