@@ -1,0 +1,35 @@
+.Main {
+    @apply flex flex-row items-center w-full;
+}
+
+.left {
+    @apply w-2/4 h-screen flex flex-col items-center justify-center bg-bv-black-400;
+}
+
+.Form {
+    @apply flex justify-center flex-col w-full mx-auto items-center;
+}
+
+.right {
+    @apply w-2/4 h-screen flex flex-col items-center justify-center;
+}
+
+.left h3 {
+    @apply translate-x-0;
+}
+
+.right .RightBackground {
+    @apply brightness-50;
+}
+
+.right svg {
+    @apply absolute z-10 top-1/4 m-auto bg-cover;
+}
+
+.Form footer{
+    @apply items-center max-w-sm w-full items-center;
+}
+
+.Form .secondaryButtons{
+    @apply flex gap-2 justify-between items-center;
+}

@@ -1,0 +1,1952 @@
+/* base css */
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Dancing+Script:wght@400..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: Arial, sans-serif;
+    @apply font-medium;
+    @apply box-border;
+    @apply text-bv-white;
+}
+
+/* scrollbar */
+*::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #F4EDE4;
+}
+
+*::-webkit-scrollbar-track:hover {
+    background-color: #F4EDE4;
+}
+
+*::-webkit-scrollbar-track:active {
+    background-color: #F4EDE4;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #11151C;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #31363F;
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: #31363F;
+}
+
+/* default */
+
+body,
+#app {
+    @apply bg-bv-black;
+}
+
+main {
+    @apply relative duration-800 ease-custom bg-bv-white;
+}
+
+.layout.layout.darkness main,
+.layout.darkness {
+    @apply bg-bv-black;
+}
+
+#AuthenticatedLayout {
+    @apply flex w-full justify-end;
+}
+
+#AuthenticatedLayout main {
+    @apply w-3/4;
+}
+
+#AuthenticatedLayout header {
+    @apply w-full fixed;
+}
+
+ul {
+    @apply list-none;
+}
+
+h1 {
+    @apply uppercase font-bold text-5xl md:text-8xl;
+}
+
+h2 {
+    @apply uppercase font-semibold text-4xl md:text-7xl w-full break-words;
+    overflow-wrap: anywhere;
+}
+
+
+h3 {
+    @apply capitalize font-medium text-bv-white text-5xl md:text-8xl;
+    font-family: 'Times New Roman';
+}
+
+p {
+    @apply text-base;
+}
+
+button,
+.button {
+    @apply uppercase flex justify-center items-center md:py-4 md:px-8 py-2 px-4 border border-bv-white bg-bv-black rounded-md transition-all duration-500 ease-linear transform;
+}
+
+.brightness .page button:hover,
+.brightness .page a.button:hover {
+    @apply text-bv-black border border-bv-black;
+}
+
+button:hover,
+.button:hover {
+    @apply bg-transparent;
+    animation: growPulse 0.3s ease-out forwards;
+}
+
+a:hover{
+    animation: growPulseA 0.3s ease-out forwards;
+}
+
+
+
+header {
+    @apply grid grid-cols-12;
+}
+
+.HorizontalList {
+    @apply flex gap-2 justify-center py-4 flex-wrap md:gap-8;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    @apply text-bv-white text-sm w-full col-span-8 col-start-2;
+}
+
+.breadcrumb-list {
+    @apply flex space-x-2;
+}
+
+.breadcrumb-item {
+    @apply flex items-center;
+}
+
+.breadcrumb-link {
+    @apply text-bv-white hover:underline;
+}
+
+.breadcrumb-icon {
+    @apply text-xl text-bv-white;
+}
+
+.breadcrumb-separator {
+    @apply mx-1 text-bv-white;
+}
+
+.breadcrumb-text {
+    @apply font-bold text-bv-orange;
+}
+
+/* Hero css */
+.Hero {
+    @apply relative flex justify-center z-30;
+}
+
+.Hero a.minLogo{
+    @apply absolute top-1/3 h-1/4;
+}
+
+.Hero .minLogo .MinLogo{
+    @apply  w-full h-full;
+}
+
+/* Sidemenu css */
+.SideMenu .FullLogo {
+    @apply w-2/4 h-auto m-auto max-w-sm;
+}
+
+header .FullLogo {
+    @apply w-24 h-auto md:w-full;
+}
+
+main.OpennedSideMenu {
+    @apply transition-transform duration-800 ease-custom;
+    @apply origin-center relative z-10 scale-[0.84] -translate-x-[75vw] md:-translate-x-[50vw] overflow-hidden h-screen;
+}
+
+.OpenSideMenu {
+    @apply relative p-1;
+}
+
+.OpenSideMenu:hover {
+    @apply bg-transparent;
+}
+
+.OpenSideMenu::before {
+    content: "";
+    @apply absolute inset-0 bg-bv-gradient opacity-0 border border-0 rounded-md transition-opacity duration-500 ease-in-out;
+    z-index: -1;
+}
+
+.OpenSideMenu:hover::before {
+    @apply opacity-100;
+}
+
+.OpenSideMenu svg {
+    @apply relative z-10;
+}
+
+.SideMenu .SocialIcons ul {
+    @apply relative flex-row top-0 transform translate-y-0 right-0 justify-center py-4;
+}
+
+.Authenticated .SubItems {
+    @apply ml-2;
+}
+
+/* input group */
+.InputGroup {
+    @apply flex flex-col w-full max-w-sm py-4;
+}
+
+.InputGroup label {
+    @apply font-bold text-xs;
+}
+
+.InputGroup input,
+.InputGroup textarea,
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    @apply border border-0 rounded-md bg-bv-black-200;
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    @apply !text-bv-orange;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow .ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button:focus .ql-stroke,
+.ql-snow .ql-toolbar button:focus .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button:focus .ql-fill,
+.ql-snow .ql-toolbar button:focus .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+    stroke: #F9AF04 !important;
+}
+
+.ql-snow.ql-toolbar button svg,
+.ql-snow .ql-toolbar button svg,
+.ql-stroke {
+    stroke: #F4EDE4 !important;
+}
+
+.ql-editor.ql-blank:before {
+    @apply !text-bv-white;
+}
+
+.InputGroup:has(label.checkbox),
+.InputGroup:has(label.radio) {
+    @apply w-min;
+}
+
+.InputGroup label.checkbox,
+.InputGroup label.radio {
+    @apply flex gap-2 w-min whitespace-nowrap;
+}
+
+.InputGroup input[type='checkbox']:checked:hover,
+.InputGroup input[type='checkbox']:checked:focus,
+.InputGroup input[type='radio']:checked:hover,
+.InputGroup input[type='radio']:checked:focus {
+    @apply border-0 bg-bv-black;
+}
+
+button.principal {
+    @apply w-full col-span-5 bg-bv-white text-bv-black font-bold transition-all duration-500 ease-linear max-w-sm;
+}
+
+button.principal svg {
+    fill: #11151C;
+    stroke: #11151C;
+    @apply transition-all duration-500 ease-linear;
+}
+
+button.principal:hover {
+    @apply bg-transparent text-bv-white;
+}
+
+button.principal:hover svg {
+    fill: #F4EDE4;
+    stroke: #F4EDE4;
+}
+
+button.secondary {
+    @apply w-full;
+}
+
+.InputGroup .react-select__input {
+    color: #F4EDE4 !important;
+}
+
+/* Estilo do pop-up do Datepicker */
+.react-datepicker {
+    background-color: #11151C !important;
+    /* bv-black */
+    color: #F4EDE4 !important;
+    /* Text color */
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+
+/* Cabeçalho (Mês e Ano) */
+.react-datepicker__header {
+    background-color: #11151C !important;
+    /* bv-black */
+    color: #F4EDE4 !important;
+    /* Text color */
+    border-bottom: 1px solid #444 !important;
+    /* Border between month and days */
+}
+
+/* Texto de Mês e Ano dentro do header */
+.react-datepicker__current-month {
+    color: #F4EDE4 !important;
+    /* Mês/ano em branco */
+}
+
+/* Navegação (Botões de Mês e Ano) */
+.react-datepicker__navigation {
+    background-color: transparent !important;
+    color: #F4EDE4 !important;
+    /* Text color */
+    border: none !important;
+}
+
+/* Seleção de dias */
+.react-datepicker__day--selected {
+    background-color: #F4EDE4 !important;
+    /* Selected day background */
+    color: #11151C !important;
+    /* Text color for selected day */
+}
+
+/* Hover nos dias */
+.react-datepicker__day:hover {
+    background-color: #333 !important;
+    /* Hover color */
+    color: #F4EDE4 !important;
+    /* Text color */
+}
+
+/* Estilo do botão de hoje */
+.react-datepicker__today-button {
+    background-color: #11151C !important;
+    /* Button background */
+    color: #F4EDE4 !important;
+    /* Text color */
+    border: none !important;
+}
+
+/* Ajustando os dias do mês */
+.react-datepicker__day {
+    color: #F4EDE4 !important;
+    /* Text color for all days */
+}
+
+/* Estilo para os dias da semana */
+.react-datepicker__day-of-week {
+    color: #F4EDE4 !important;
+    /* Dias da semana em branco */
+}
+
+/* Customização para os dias fora do mês (grayscale) */
+.react-datepicker__day--disabled {
+    color: #888 !important;
+    /* Color for disabled days */
+}
+
+/* Ajustes no texto do dropdown de mês e ano */
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+    background-color: #11151C !important;
+    /* Dropdown background */
+    color: #F4EDE4 !important;
+    /* Text color */
+}
+
+/* Ajustando a aparência do header (Mês e Ano) */
+.react-datepicker__header {
+    background-color: #11151C !important;
+    color: #F4EDE4 !important;
+    /* Header text in white */
+}
+
+/* Ajustando a cor do texto nos botões */
+.react-datepicker__navigation {
+    background-color: transparent !important;
+    color: #F4EDE4 !important;
+}
+
+/* Quando o dropdown de ano/mes é exibido */
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+    background-color: #11151C !important;
+    color: #F4EDE4 !important;
+}
+
+/* Cor do texto dos dias da semana */
+.react-datepicker__day-name {
+    color: #F4EDE4 !important;
+    /* Cor do texto para os dias da semana */
+}
+
+/* Estilo para o dia selecionado */
+.react-datepicker__day--selected {
+    background-color: #F4EDE4 !important;
+    /* Fundo do dia selecionado */
+    color: #11151C !important;
+    /* Cor do texto do dia selecionado */
+}
+
+/* Estilo para os dias da semana (Su, Mo, Tu...) */
+.react-datepicker__day-name {
+    color: #F4EDE4 !important;
+    /* Alterando a cor para branco */
+}
+
+/* Cor dos dias */
+.react-datepicker__day {
+    color: #F4EDE4 !important;
+    /* Cor do texto dos dias do calendário */
+}
+
+/* Estilo de hover para os dias */
+.react-datepicker__day:hover {
+    background-color: #333 !important;
+    /* Cor de hover para os dias */
+    color: #F4EDE4 !important;
+    /* Texto do hover em branco */
+}
+
+/* Ajustes adicionais, se necessário */
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+    background-color: #333 !important;
+    /* Cor de fundo para intervalo */
+    color: #F4EDE4 !important;
+    /* Cor do texto para os dias dentro do intervalo */
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+    color: #11151C !important;
+}
+
+/* swal */
+
+/* Custom SweetAlert Styles */
+.swal2-popup {
+    @apply bg-bv-black text-bv-white rounded-2xl;
+}
+
+.swal2-title {
+    @apply text-bv-white text-xl font-semibold;
+}
+
+.swal2-content {
+    @apply text-bv-white text-base;
+}
+
+.swal2-icon {
+    @apply bg-transparent;
+}
+
+.swal2-confirm {
+    @apply principal;
+}
+
+.swal2-cancel {
+    @apply secondary;
+}
+
+.swal2-loader {
+    @apply bg-transparent;
+}
+
+/* header */
+.NavItem {
+    @apply relative w-fit;
+}
+
+.NavItem:before {
+    content: '';
+    @apply bg-bv-gradient w-0 h-0.5 absolute bottom-0 left-0 transition-all duration-500 ease-in-out;
+}
+
+.NavItem a {
+    @apply font-bold text-2xl uppercase text-transparent w-full block;
+}
+
+.Authenticated .NavItem a {
+    @apply pl-6;
+}
+
+.SubItems {
+    @apply absolute bg-bv-black p-2 opacity-0 invisible transform -translate-y-3 transition-all duration-500 ease-in-out z-10;
+}
+
+.SideMenu .SubItems {
+    @apply relative opacity-100 visible transform translate-y-0;
+}
+
+.SideMenu .NavItemContainer {
+    width: min-content
+}
+
+.NavItemContainer:hover .SubItems {
+    @apply opacity-100 visible transform translate-y-0;
+}
+
+.NavItem a:after {
+    content: attr(data-content);
+    text-overflow: hidden;
+    white-space: nowrap;
+    @apply font-bold text-2xl uppercase absolute left-0 bg-bv-gradient transition-all duration-500 ease-in-out w-0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Authenticated .NavItem a:after {
+    @apply pl-6;
+}
+
+.NavItem:hover a:after {
+    @apply w-full;
+}
+
+.NavItem a::before {
+    content: attr(data-content);
+    text-overflow: hidden;
+    white-space: nowrap;
+    @apply font-bold text-2xl uppercase absolute left-0 bg-bv-white transition-all duration-500 ease-in-out w-full;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Authenticated .NavItem a:before {
+    @apply pl-6;
+}
+
+.NavItem:hover a:before {
+    @apply w-0;
+}
+
+.NavItem:hover:before {
+    @apply w-full;
+}
+
+/* subMenu */
+.NavSubItem {
+    @apply relative w-fit whitespace-nowrap py-2 px-2;
+}
+
+.NavSubItem:before {
+    content: '';
+    @apply bg-bv-gradient w-0 h-0.5 absolute bottom-0 left-0 transition-all duration-500 ease-in-out;
+}
+
+.NavSubItem:hover {
+    @apply bg-bv-black;
+}
+
+.NavSubItem a {
+    @apply font-bold text-lg uppercase text-transparent w-full block;
+}
+
+.Authenticated .NavSubItem a {
+    @apply pl-8;
+}
+
+.NavSubItem a:after {
+    content: attr(data-content);
+    white-space: nowrap;
+    @apply font-bold text-lg uppercase absolute left-0 bg-bv-gradient transition-all duration-500 ease-in-out w-0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Authenticated .NavSubItem a:after {
+    @apply pl-8;
+}
+
+.NavSubItem:hover a:before {
+    @apply w-0;
+}
+
+.Authenticated .NavSubItem a:before {
+    @apply pl-8;
+}
+
+.NavSubItem:hover a:after {
+    @apply w-full;
+}
+
+.NavSubItem:hover:before {
+    @apply w-full;
+}
+
+.NavSubItem a::before {
+    content: attr(data-content);
+    white-space: nowrap;
+    @apply font-bold text-lg uppercase absolute left-0 bg-bv-white transition-all duration-500 ease-in-out w-full;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.UserProfile {
+    @apply col-span-2;
+}
+
+/* searh form */
+.SearchForm .InputGroup {
+    @apply py-0;
+}
+
+.upload-button {
+    @apply w-full flex items-center justify-center gap-4;
+}
+
+fieldset {
+    @apply bg-bv-black-400 p-4 rounded-md mb-8 w-2/4;
+}
+
+fieldset legend {
+    @apply text-bv-black bg-bv-white p-2 rounded-md font-bold;
+}
+
+.required {
+    @apply text-red-700;
+}
+
+button.next,
+button.prev {
+    width: fit-content;
+    @apply py-4 px-8;
+}
+
+.listingModal p {
+    width: fit-content;
+    text-align: left;
+    margin: 5px 0;
+}
+
+.postModal {
+    @apply flex gap-4 flex-col;
+}
+
+[type='text']:focus,
+input:where(:not([type])):focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+    @apply ring-bv-white;
+}
+
+section {
+    max-width: 1440px;
+    @apply w-full m-auto col-span-10 col-start-2;
+}
+
+section.Hero {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Image Compare */
+.image-compare-container {
+    @apply relative w-full h-[300px] md:h-[400px] rounded-lg shadow-lg cursor-ew-resize;
+}
+
+.image-compare-image {
+    @apply absolute inset-0 w-full h-full object-cover pointer-events-none;
+}
+
+.image-compare-overlay {
+    @apply absolute inset-0 overflow-hidden;
+}
+
+.image-compare-separator {
+    @apply absolute top-0 bottom-0 transform translate-x-[-50%] cursor-ew-resize z-10;
+}
+
+.separator-bar {
+    @apply w-1 h-full bg-bv-black shadow-lg relative rounded-lg;
+}
+
+.separator-text {
+    @apply absolute top-0 left-0 right-0 bg-bv-black text-bv-white p-1 text-center text-xs rounded-t-lg;
+}
+
+.separator-grab {
+    @apply w-8 h-8 bg-bv-black rounded-full border border-white shadow-md flex items-center justify-center cursor-grabbing absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+}
+
+.grab-text {
+    @apply text-bv-white text-sm flex;
+}
+
+.utilLinks {
+    @apply grid grid-rows-2 grid-flow-col gap-4 w-fit m-auto py-32;
+}
+
+.utilLinks .utilLink {
+    @apply w-32 h-24 md:w-64 md:h-48 lg:w-96 md:h-72 flex justify-center items-center text-center relative rounded-md transition-all duration-300 ease-linear overflow-hidden;
+}
+
+.utilLinks .utilLink p {
+    @apply z-10 md:text-xl font-bold;
+}
+
+.utilLinks .utilLink:before {
+    content: '';
+    @apply absolute top-0 bottom-0 right-0 left-0 bg-cover rounded-md;
+}
+
+.utilLinks .utilLink:after {
+    content: '';
+    @apply absolute inset-1/5 border-2 rounded-md;
+    transition: all 0.3s ease-in-out;
+}
+
+.utilLinks .utilLink:hover:after {
+    @apply transition-all duration-300 ease-linear;
+    top: 10%;
+    right: 10%;
+    bottom: 10%;
+    left: 10%;
+    transform: rotate(180deg);
+}
+
+.utilLinks .utilLink .overlay {
+    @apply absolute w-full h-full rounded-md;
+}
+
+.utilLinks .utilLink.list-with-me .overlay,
+.utilLinks .utilLink.home-valuation .overlay {
+    @apply bg-bv-black bg-opacity-50;
+}
+
+.utilLinks .utilLink.list-with-me,
+.utilLinks .utilLink.home-valuation,
+.utilLinks .utilLink.list-with-me:after,
+.utilLinks .utilLink.home-valuation:after,
+.utilLinks .utilLink.list-with-me p,
+.utilLinks .utilLink.home-valuation p {
+    @apply text-bv-white border-bv-white;
+}
+
+.utilLinks .utilLink.properties .overlay,
+.utilLinks .utilLink.neighborhood-guides .overlay {
+    @apply bg-bv-brown bg-opacity-50;
+}
+
+.utilLinks .utilLink.properties,
+.utilLinks .utilLink.neighborhood-guides,
+.utilLinks .utilLink.properties:after,
+.utilLinks .utilLink.neighborhood-guides:after,
+.utilLinks .utilLink.properties p,
+.utilLinks .utilLink.neighborhood-guides p {
+    @apply text-bv-black border-bv-black;
+}
+
+.utilLinks .utilLink.list-with-me:before {
+    background-image: url("/img/listWithMe.webp");
+}
+
+.utilLinks .utilLink.home-valuation:before {
+    background-image: url("/img/homeValuation.jpg");
+}
+
+.utilLinks .utilLink.properties:before {
+    background-image: url("/img/interactiveMap.webp");
+}
+
+.utilLinks .utilLink.neighborhood-guides:before {
+    background-image: url("/img/neighborhood.webp");
+}
+
+.OurNumbers {
+    @apply relative w-full max-w-full bg-[url("/img/ourNumbers.png")] bg-cover bg-center py-32 text-bv-white col-span-12 grid grid-cols-12;
+    background-attachment: fixed;
+}
+
+.OurNumbers .overlay {
+    @apply absolute inset-0 bg-black/50 z-0;
+}
+
+.OurNumbers .content {
+    @apply relative z-10 max-w-[1440px] mx-auto w-full col-span-10 col-start-2;
+}
+
+.our-numbers-content {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-16 text-center md:py-16 grid-rows-2;
+}
+
+.our-numbers-separator {
+    @apply absolute -top-1/4 -bottom-1/4 md:-top-3/4 md:-bottom-3/4 right-[-2rem] border-l border-bv-white;
+}
+
+.homePosts {
+    @apply flex flex-col gap-4 w-full md:w-2/4;
+}
+
+.homePosts .post {
+    @apply flex overflow-hidden h-48 md:h-72 rounded-xl;
+}
+
+.homePosts .post .left,
+.homePosts .post .right {
+    @apply w-2/4;
+}
+
+.homePosts .postData {
+    @apply bg-bv-black px-4 relative;
+}
+
+.homePosts .postData .postTitle {
+    @apply text-lg md:text-2xl py-4 overflow-hidden max-h-24 md:max-h-28;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.homePosts .postData .postContent {
+    @apply text-sm md:text-lg py-4 w-full max-h-[5rem] md:max-h-[10rem] overflow-hidden overflow-ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.homePosts .postData .postContent span,
+.homePosts .postData .postContent p,
+.homePosts .postData .postContent h1,
+.homePosts .postData .postContent h2,
+.homePosts .postData .postContent h3 {
+    @apply overflow-ellipsis overflow-hidden w-full text-sm md:text-xl;
+}
+
+.scrollingArticle {
+    @apply p-0 w-full gap-16 md:w-2/6 top-1/4 flex-col flex md:sticky;
+    height: min-content;
+}
+
+.reviews {
+    @apply flex gap-4 px-2 md:px-8 py-4 bg-bv-black w-full rounded-lg relative md:mx-4;
+}
+
+.review {
+    @apply w-full md:w-2/4 md:px-4 flex flex-col gap-4;
+}
+
+.reviewTitle {
+    @apply text-2xl;
+}
+
+.reviewContent {
+    @apply text-xl h-60 overflow-ellipsis overflow-hidden;
+}
+
+.reviewAuthor {
+    @apply text-sm flex gap-4;
+}
+
+.reviewsSeparator {
+    @apply hidden md:block w-0.5 bg-bv-white left-2/4 absolute top-8 bottom-8;
+}
+
+.reviewsNav {
+    @apply flex gap-8 justify-center py-8;
+}
+
+.arrow-button {
+    @apply bg-bv-white-200 border-2 border-bv-black text-bv-black;
+}
+
+.arrow-button svg {
+    fill: #11151C;
+    stroke: #11151C;
+    @apply w-6 h-auto;
+}
+
+#LeadsFormSection {
+@apply relative flex flex-col items-center;
+}
+
+.minimalForm {
+    @apply flex md:w-2/4 m-auto flex-wrap justify-between;
+}
+
+.minimalForm button {
+    @apply w-3/4 md:w-2/4 m-auto mt-8;
+}
+
+.minimalForm input,
+.minimalForm textarea {
+    @apply bg-transparent text-bv-black border-0 border-b-2 border-bv-black uppercase;
+}
+
+.minimalForm input {
+    @apply w-full md:w-[90%];
+}
+
+.minimalForm textarea {
+    @apply w-full;
+}
+
+#LeadFormEmail {
+    float: inline-end;
+}
+
+.contactMeForm {
+    @apply py-4 lg:px-16 rounded-2xl m-0 w-full lg:w-2/4 mb-8;
+}
+
+.contactMeForm .leadGroup {
+    @apply w-full;
+}
+
+.contactMeForm .leadGroup input {
+    @apply w-full
+}
+
+.LeadGroupName,
+.LeadGroupEmail {
+    @apply w-full md:w-3/6 py-8;
+}
+
+.leadGroup {
+    @apply w-full md:w-3/6 py-8 items-end;
+}
+
+.leadGroup.textArea {
+    @apply w-full;
+}
+
+.leadGroup.rightGroup input {
+    float: inline-end;
+}
+
+.leadGroup input {
+    @apply bg-transparent text-bv-black border-0 border-b-2 border-bv-black uppercase;
+}
+
+.LeadGroupMessage {
+    @apply w-full py-8;
+}
+
+.footer {
+    @apply bg-bv-black pt-8 flex flex-col lg:grid lg:grid-cols-12 relative z-30 mt-32 items-center;
+}
+
+.footer .logo {
+    @apply lg:col-span-2 lg:col-start-2;
+}
+
+.footer .logo .FullLogo {
+    @apply w-32 m-auto lg:w-full h-auto;
+}
+
+.footer nav {
+    @apply col-span-8 col-start-5 col-end-11 w-full;
+}
+
+.footer .hericaFooterImage{
+    @apply col-span-2 col-start-11 hidden lg:flex;
+}
+
+.footerList {
+    @apply flex flex-wrap text-center w-3/4 m-auto lg:w-full flex-col md:flex-row;
+}
+
+.footerList li {
+    @apply w-2/6 py-8;
+}
+
+.footer .SocialIcons ul {
+    @apply relative flex-row top-0 right-0 translate-y-0;
+}
+
+.AdvancedFilter {
+    @apply bg-bv-black-500 flex-col flex w-full p-4 rounded-lg my-4 mx-auto md:w-3/4;
+}
+
+.AdvancedFilter .header {
+    @apply flex justify-center items-center py-4;
+}
+
+.AdvancedFilter .header span {
+    @apply md:w-2/6 md:block h-1 bg-bv-white;
+}
+
+.AdvancedFilter .header h2 {
+    @apply text-5xl md:w-2/6 text-center;
+}
+
+.AdvancedFilter .inputs {
+    @apply flex gap-4 justify-center;
+}
+
+.AdvancedFilter .inputs fieldset {
+    @apply w-full;
+}
+
+.AdvancedFilter .inputs .filterStep {
+    @apply w-full flex flex-wrap justify-between;
+}
+
+@media(min-width: 768px) {
+    .AdvancedFilter .inputs .filterStep .InputGroup {
+        width: 40%;
+    }
+}
+
+.AdvancedFilter .bottom a {
+    @apply font-bold w-3/4 m-auto;
+}
+
+.AdvancedFilter .legends {
+    @apply flex gap-4 pl-4 flex-col md:flex-row mb-4 md:mb-0;
+}
+
+.AdvancedFilter .legends .legendSelector {
+    @apply bg-bv-white px-4 py-2 text-bv-black md:-mb-4 z-10;
+}
+
+.AdvancedFilter .legends .legendSelector:hover {
+    @apply bg-bv-black text-bv-white;
+}
+
+.AdvancedFilter .legends .legendSelector.active {
+    @apply bg-bv-black-100 text-bv-white;
+}
+
+#listings {
+    @apply grid grid-cols-12 pt-16;
+}
+
+#listings  .listing{
+    @apply cursor-pointer bg-bv-black bg-opacity-5 rounded-xl transition-all duration-300 transform;
+}
+
+#listings  .listing:hover{
+    @apply bg-opacity-20;
+    animation: growPulse 0.3s ease-out forwards;
+}
+
+.loopingContainer {
+    @apply col-span-12 lg:col-span-7;
+}
+
+.pagination {
+    @apply text-bv-black;
+}
+
+.looping {
+    @apply w-full grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.listing .thumbnail {
+    @apply h-64;
+}
+
+.listing .thumbnail img {
+    @apply rounded-2xl;
+}
+
+.listing .moredetails {
+    @apply flex gap-2 justify-between;
+}
+
+.listing h2,
+.listing p,
+.listing svg,
+.listing path {
+    @apply text-bv-black
+}
+
+.listing .details {
+    @apply py-4 flex flex-col gap-2 px-4;
+}
+
+.listing .details h2 {
+    @apply text-xl flex gap-4 overflow-hidden whitespace-nowrap overflow-ellipsis;
+}
+
+.listing .address {
+    @apply text-gray-600 !text-base !font-semibold !block;
+}
+
+.listing .typeAndPrice {
+    @apply flex justify-between items-center;
+}
+
+.listing .typeAndPrice .price{
+    @apply w-auto;
+}
+
+.listing .typeAndPrice p {
+    @apply flex gap-4;
+}
+
+.listing .details .moredetails p,
+.listing .details .moredetails p span {
+    @apply flex gap-4 items-center;
+}
+
+.listing .details .moredetails p {
+    @apply justify-between;
+}
+
+.pagination {
+    @apply flex gap-2 justify-center items-center;
+}
+
+.pagination button,
+.pagination button svg,
+.pagination button path {
+    @apply text-bv-white bg-transparent text-2xl;
+}
+
+.pagination button {
+    @apply px-4 py-2 bg-gradient-to-r from-bv-white to-bv-black transform;
+}
+
+.pagination .prevPage{
+    @apply bg-gradient-to-r from-bv-white to-bv-black;
+}
+
+.pagination .nextPage{
+    @apply bg-gradient-to-r from-bv-black to-bv-white;
+}
+
+.pagination button:hover {
+    @apply !border-bv-white;
+    animation: growPulse 0.3s ease-out forwards;
+}
+
+.pagination button.current {
+    @apply bg-bv-black !bg-none text-bv-white mb-4;
+}
+
+.pagination button.current:hover {
+    @apply !text-bv-white;
+}
+
+.pagination button.FirstPageButton,
+.pagination button.LastPageButton {
+    @apply bg-transparent from-transparent text-bv-black;
+}
+
+.pagination button.FirstPageButton svg,
+.pagination button.LastPageButton svg,
+.pagination button.FirstPageButton path,
+.pagination button.LastPageButton path {
+    @apply text-bv-black;
+}
+
+#FeaturedListings {
+    @apply overflow-hidden;
+}
+
+.sobrepositionAside {
+    @apply bg-bv-black rounded-2xl p-4 lg:w-2/4 flex flex-col gap-12 justify-center items-center;
+}
+
+.sobrepositionAside .FullLogo {
+    @apply w-32;
+}
+
+.sobrepositionAside .image {
+    @apply w-3/4;
+}
+
+.sobrepositionAside .socialIcons ul {
+    @apply flex gap-4 text-bv-white justify-center items-center;
+}
+
+.sobrepositionAside .socialIcons svg {
+    @apply fill-bv-white;
+}
+
+.sobrepositionAside .socialIcons path {
+    @apply fill-bv-white;
+}
+
+.sobrepositionAside .socialIcons svg:hover path {
+    @apply fill-bv-brown;
+}
+
+.FixedSocialIcons.SocialIcons ul {
+    @apply z-50 flex justify-center gap-4;
+}
+
+.FixedSocialIcons.SocialIcons a{
+    @apply p-1 block bg-bv-white border border-0 rounded-lg relative overflow-hidden transition-all duration-500 ease-in-out;
+}
+
+.FixedSocialIcons.SocialIcons a:hover{
+    @apply bg-transparent;
+}
+
+.FixedSocialIcons.SocialIcons a::before {
+    content: "";
+    @apply absolute inset-0 bg-bv-gradient opacity-0 transition-opacity duration-500 ease-in-out;
+    z-index: -1;
+}
+
+.FixedSocialIcons.SocialIcons a:hover::before {
+    @apply opacity-100;
+}
+
+.FixedSocialIcons.SocialIcons a svg {
+    @apply relative z-10 w-4 h-auto md:w-8;
+}
+
+
+#contactMe {
+    @apply relative;
+}
+
+.contactContainer {
+    @apply lg:flex items-center justify-between;
+}
+
+#Blog {}
+
+#Blog .postsLooping {
+    @apply flex flex-col gap-24;
+}
+
+#Blog .postsLooping div a{
+    @apply col-span-12;
+}
+
+#Blog .post {
+    @apply flex flex-col md:flex-row rounded-2xl md:h-64;
+}
+
+#Blog .post .postTitle {
+    @apply !text-bv-white;
+}
+
+#Blog .post .postContent {
+    @apply !text-gray-500;
+}
+
+#Blog .post .postFigure {
+    @apply md:w-1/4;
+}
+
+#Blog .post .left.postFigure img {
+    @apply rounded-l-2xl;
+}
+
+#Blog .post .right.postFigure img {
+    @apply rounded-r-2xl;
+}
+
+#Blog .post .postData {
+    @apply bg-bv-black md:w-3/4 p-4 overflow-hidden overflow-ellipsis flex flex-col gap-4;
+}
+
+#Blog .post .postData .postContent {
+    @apply h-24 overflow-ellipsis overflow-hidden;
+}
+
+#Blog .post .postTitle {
+    @apply text-2xl;
+}
+
+#Blog .post .tags,
+#Blog .post .categories {
+    @apply flex flex-wrap gap-4;
+}
+
+#Blog .post .categories .category {
+    @apply text-bv-brown-500;
+}
+
+#Blog .post .categories .category:hover {
+    @apply text-bv-brown-700;
+}
+
+#Blog .post .tags .tag {
+    @apply bg-bv-orange bg-opacity-20 text-bv-orange px-2 py-1 rounded-full text-xs;
+}
+
+#Blog .post .tags .tag:hover {
+    @apply bg-bv-orange-700;
+}
+
+#Post .postTitle {
+    @apply py-12 text-bv-black text-2xl;
+}
+
+#Post .postContent {
+    @apply lg:w-3/4 p-4 rounded-2xl shadow-2xl !text-bv-black m-auto;
+}
+
+.react-select__control {
+    @apply !border !border-bv-black-200 !rounded-md !bg-bv-black-200 !text-bv-white;
+}
+
+.react-select__control--is-focused {
+    @apply !border-bv-white !bg-bv-black !text-bv-white;
+}
+
+.react-select__menu {
+    @apply !bg-bv-black-200 !text-bv-white !rounded-md !shadow-lg;
+}
+
+.react-select__option {
+    @apply !px-2 !py-1 !cursor-pointer !transition-all !duration-300 !text-bv-white;
+}
+
+.react-select__option--is-selected {
+    @apply !bg-bv-white !text-bv-black !font-bold;
+}
+
+.react-select__option--is-focused {
+    @apply !bg-bv-black !text-bv-white;
+}
+
+.react-select__multi-value {
+    @apply !bg-bv-white !text-bv-black !rounded-md !px-2 !py-1;
+}
+
+.react-select__multi-value__remove {
+    @apply !cursor-pointer !text-bv-black hover:!text-red-500;
+}
+
+.react-select__single-value {
+    @apply !rounded-md !px-2 !py-1 !text-bv-white;
+}
+
+.react-select__input-container{
+@apply !text-bv-white;
+}
+
+.react-select__input {
+    @apply !text-bv-white;
+}
+
+.googleMap {
+    @apply sticky top-48 lg:top-32 w-[36vw] h-[86vh] rounded-2xl col-start-9 col-span-3;
+}
+
+.propertie {
+    @apply relative bg-bv-black pb-4;
+}
+
+.propertie .tag {
+    @apply absolute px-2 py-1 bg-bv-orange bg-opacity-100 text-bv-black rounded-full text-xs top-2 left-2;
+}
+
+.propertie .tag:hover {
+    @apply bg-bv-orange-700;
+}
+
+.propertie .propertiePrincipalDetails {
+    @apply pt-4;
+}
+
+.propertie .propertiePrincipalDetails p {
+    @apply text-xl;
+}
+
+.propertie .propertiePrincipalDetails,
+.propertie .propertieDetails {
+    @apply flex flex-col gap-4 mb-4 px-4;
+}
+
+.propertie .propertiePrincipalDetails p,
+.propertie .propertieDetails p,
+.propertie .propertiePrincipalDetails p .detailsKey,
+.propertie .propertieDetails p .detailsKey {
+    @apply flex gap-2;
+}
+
+.pac-item,
+.pac-item span {
+    @apply !text-bv-black;
+}
+
+.orderLooping {
+    @apply md:flex justify-between items-center py-8 !text-bv-black;
+}
+
+.orderLooping .total{
+    @apply text-bv-black;
+}
+
+.react-select__input {
+    @apply !outline-bv-black;
+}
+
+.orderLooping .total {
+    @apply text-bv-black font-bold mb-4 md:m-0;
+}
+
+.orderLooping #orderSort {
+    @apply w-full md:!w-2/6;
+}
+
+.gallery {
+    @apply flex gap-4 h-[45vh] lg:h-[65vh] overflow-hidden
+}
+
+.gallery .current {
+    @apply relative w-full;
+}
+
+.gallery-left {
+    width: 100%;
+}
+
+@media(min-width: 768px){
+    .gallery-left {
+        width: calc(75% - 1rem);
+    }
+}
+
+.gallery-right {
+    @apply hidden lg:flex flex-col gap-4 w-1/4;
+}
+
+.gallery-right figure {
+    height: calc(50% - .5rem);
+}
+
+.gallery .nav {
+    @apply absolute inset-y-1/5 lg:inset-y-2/4 w-full;
+}
+
+.gallery .nav button {
+    @apply absolute py-2 px-4;
+}
+
+.gallery .nav button:hover {
+    @apply !bg-bv-white !text-bv-black;
+}
+
+.gallery .nav button:hover svg,
+.gallery .nav button:hover path {
+    @apply !text-bv-black;
+}
+
+.info {
+    @apply bg-bv-white w-5/6 lg:w-2/4 h-52 p-4 absolute bottom-4 left-0 flex justify-between items-center transition-all duration-500 ease-linear;
+}
+
+.info.hide{
+    @apply p-0 -translate-x-full;
+}
+
+.error{
+    @apply text-red-700;
+}
+
+.details-btn {
+    @apply relative border-bv-black;
+    transform: rotate(270deg)!important;
+}
+
+.info .info-content{
+    @apply flex flex-col gap-2;
+}
+
+.info-title {
+    @apply text-lg font-bold text-bv-black;
+}
+
+.info-price {
+    @apply text-2xl font-bold text-red-700;
+}
+
+.info-size {
+    @apply text-sm text-bv-black font-bold;
+}
+
+.info-btn {
+    @apply w-4;
+}
+
+.details-btn {
+    @apply -left-16 px-4 py-2 w-52 rounded-none rounded-b-lg hover:bg-bv-white;
+}
+
+#fullPropertie .content {
+    @apply flex flex-col gap-4 transition-all duration-500 ease-in-out overflow-hidden;
+}
+
+.verticalSpacing{
+    @apply w-[.1rem] bg-bv-white h-full;
+}
+
+#fullPropertie .content .description {
+    @apply bg-bv-black py-8 px-4 rounded-lg flex gap-4 justify-between;
+}
+
+#fullPropertie .content .description .pag1,
+#fullPropertie .content .description .pag2 {
+    width: calc(50% - .5rem);
+}
+
+.gallery .info.false {
+    transform: translateX(-95%);
+}
+
+.detailContainer {
+    @apply bg-bv-black-300 rounded-lg flex flex-col overflow-hidden;
+}
+
+.headBtn {
+    @apply flex bg-bv-black gap-4 justify-between items-center py-4 px-4;
+}
+
+#fullPropertie .rowInfo {
+    @apply flex gap-4 justify-between px-4;
+}
+
+.detailContainer .rowInfo div {
+    @apply flex gap-4;
+}
+
+.west-palm {
+    background-image: url("/img/westpalm.jpg");
+}
+
+.delray-beach {
+    background-image: url("/img/delraybeach.jpg");
+}
+
+.boca-raton {
+    background-image: url("/img/bocaraton.jpg");
+}
+
+.fort-lauderdale {
+    background-image: url("/img/fortlauderdale.jpg");
+}
+
+.miami {
+    background-image: url("/img/miami.jpg");
+}
+
+.cities {
+    @apply flex flex-wrap relative flex-col md:flex-row;
+}
+
+.city {
+    @apply w-full md:w-2/4 h-96 bg-no-repeat hover:z-20 relative transition-all duration-200 ease-linear px-8 py-8 pt-24 overflow-hidden;
+    background-size: cover;
+}
+
+.city button:hover {
+    @apply bg-bv-white;
+}
+
+.city:hover .content {
+    @apply transform translate-y-0 opacity-100;
+}
+
+.city:hover h2 {
+    @apply transform translate-y-0 opacity-100;
+}
+
+.city .overflow {
+    @apply absolute top-0 left-0 bottom-0 right-0 bg-bv-black bg-opacity-50 z-10;
+}
+
+.city .content {
+    @apply relative z-10 w-full h-full flex justify-between items-center flex-col transform translate-y-20 overflow-hidden opacity-0 transition-all duration-200 ease-linear;
+}
+
+.city h2 {
+    @apply text-xl text-center z-10 relative opacity-50 transform translate-y-20 transition-all duration-200 ease-linear;
+}
+
+.city.miami {
+    @apply md:absolute z-10 md:inset-1/4 md:rounded-2xl;
+}
+
+#FeaturedListings {
+    @apply overflow-visible;
+}
+
+.area-section {
+    @apply relative col-span-12 max-w-full;
+}
+
+.area-wrapper {
+    @apply relative w-full lg:h-[800px] mx-auto grid grid-cols-1 lg:block;
+}
+
+.area-item {
+    @apply flex relative w-full h-[250px] lg:absolute lg:w-[50%] lg:h-[50%] overflow-hidden z-0 transition-all;
+}
+
+#Areas{
+    @apply overflow-hidden;
+}
+
+.area-item-1 { @apply lg:top-0 lg:left-0; }
+.area-item-2 { @apply lg:top-0 lg:right-0; }
+.area-item-3 { @apply lg:bottom-0 lg:left-0; }
+.area-item-4 { @apply lg:bottom-0 lg:right-0; }
+.area-item-5 {
+    @apply relative w-full h-[250px] lg:absolute lg:w-[50%] lg:h-[50%] lg:!left-1/2 lg:!top-1/2 lg:!-translate-x-1/2 lg:!-translate-y-1/2;
+}
+
+.area-item:hover {
+    z-index: 10;
+}
+
+.area-image {
+    @apply w-full h-full object-cover;
+}
+
+.area-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-300;
+}
+
+.area-content {
+    @apply absolute inset-0 flex items-center justify-center text-white px-4 transition-all duration-500 ease-out;
+}
+
+.group:hover .area-content {
+    transform: translateY(-1rem);
+}
+
+.area-item-4 .area-inner, .area-item-3 .area-inner{
+    @apply translate-y-16;
+}
+
+.area-inner {
+    @apply flex flex-col items-center transform translate-y-4 transition-all duration-500 gap-8 ease-out;
+}
+
+.group:hover .area-inner {
+    @apply translate-y-4 flex-col;
+}
+
+.area-title {
+    @apply text-lg md:text-xl font-semibold text-center;
+}
+
+.area-button {
+    @apply mt-2 px-4 py-1 text-xs md:text-sm border border-white rounded-full opacity-0 transition-opacity duration-500;
+}
+
+.group:hover .area-button {
+    @apply opacity-100;
+}
+
+button:disabled{
+    @apply opacity-20;
+}
+
+.propertieThumbnail{
+    @apply h-48;
+}
+
+#MyIntroduction{
+    @apply rounded-lg p-8;
+    box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+}
+
+.overlayReverseImage{
+    transform: rotateY(180deg);
+    @apply w-auto max-h-72 lg:max-h-full lg:w-2/6 h-auto mb-4 rounded-lg pl-12;
+    box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px -1px 13px 3px rgba(0,0,0,0.5);
+}
+
+.aboutMeContainer{
+    @apply flex justify-between items-center flex-col-reverse md:flex-row;
+}
+
+.leadsFormSectionContainer{
+    @apply w-4/6;
+}
+
+.leadsFormContent{
+    @apply flex gap-4 items-center flex-col lg:flex-row;
+}
+
+.homeValuationFeaturesAndAmenities{
+    @apply w-full;
+}
+
+.homeValuationFeaturesAndAmenities .InputGroup{
+    @apply m-auto;
+}
+
+.radioSelect, .checkboxSelect{
+    @apply flex gap-4 flex-wrap w-full justify-between;
+}
+
+.radioInput, .checkboxInput{
+    @apply relative;
+}
+
+.radioInput input{
+    @apply !w-16 !h-8;
+}
+
+.checkboxInput{
+    @apply w-full md:!w-[30%];
+}
+
+.checkboxInput input{
+    @apply !h-16;
+}
+
+.radioSelect label, .checkboxInput label{
+    @apply absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center text-center;
+}
+
+.radioInput input:checked + label, .checkboxInput input:checked + label{
+    @apply text-bv-black border-2 border-bv-black rounded-lg;
+  }
+
+  .minMaxContainer{
+    @apply flex gap-4 items-center;
+  }
+
+  .embla__slide a{
+    @apply w-full;
+  }
+
+  .embla .day{
+    @apply bg-bv-white border-2 border-bv-black;
+  }
+
+  .embla .day span{
+    @apply text-bv-black;
+  }
+
+  .embla .day--selected{
+    @apply bg-green-900;
+  }
+
+  .embla .day--selected span{
+    @apply text-bv-white;
+  }
+
+  .daysController svg, .daysController svg path{
+    @apply fill-current;
+  }
+
+  .form-config{
+    @apply flex gap-4 flex-wrap;
+  }
+
+@keyframes growPulse {
+    0% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes growPulseA {
+    0% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+/* ── Listing badges (transaction type + status) ─────────────────────────── */
+.thumbnail.relative { position: relative; }
+
+.listingBadges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+}
+
+.listingBadge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff;
+}
+
+.badge-sale        { background: #2563eb; }
+.badge-rent        { background: #7c3aed; }
+.badge-sold        { background: #dc2626; }
+.badge-active      { background: #16a34a; }
+.badge-coming-soon { background: #ca8a04; }
+.badge-contingent  { background: #d97706; }
+.badge-pending     { background: #ea580c; }
+
+/* ── Listing filter chips ────────────────────────────────────────────────── */
+.listingFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 8px 0 14px;
+}
+
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filterLabel {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.filterChips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filterChip {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1.5px solid #d1d5db;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #374151;
+}
+
+.filterChip:hover { border-color: #9ca3af; }
+
+.filterChip--sale.filterChip--active   { background: #2563eb; color: #fff; border-color: #2563eb; }
+.filterChip--rent.filterChip--active   { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+.filterChip--sold.filterChip--active   { background: #dc2626; color: #fff; border-color: #dc2626; }
+.filterChip--active                    { background: #111827; color: #fff; border-color: #111827; }

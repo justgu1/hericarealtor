@@ -1,0 +1,19 @@
+# Selenium + Chrome automation
+selenium==4.25.0
+undetected-chromedriver==3.5.5
+webdriver-manager==4.0.2
+setuptools  # distutils was removed in Python 3.12; undetected-chromedriver needs it
+
+# Virtual display (required in Docker to run Chrome non-headless)
+PyVirtualDisplay==3.0
+
+# PostgreSQL
+psycopg2-binary==2.9.9
+
+# HTTP server (n8n trigger)
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+requests==2.32.3
+
+# Utilities
+python-dotenv==1.0.1

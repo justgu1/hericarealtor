@@ -1,0 +1,60 @@
+.NeighborhoodCarrousel {
+    @apply text-center;
+}
+
+.title {
+    @apply text-base lg:text-2xl mb-5 text-bv-black;
+}
+
+.carousel {
+    @apply flex items-center justify-center relative lg:gap-5;
+}
+
+.navButton {
+    @apply pt-16 lg:pt-0 bg-transparent border-none text-2xl cursor-pointer w-1/6 transition duration-300 ease-in-out;
+}
+
+.navButton svg {
+    @apply w-8;
+}
+
+.cityContent {
+    @apply text-center w-full transition duration-300 ease-in-out;
+}
+
+.cityImage {
+    @apply w-full h-32 lg:h-96 rounded-lg transition-all duration-500 ease-in-out;
+}
+
+.cityDescription {
+    @apply font-semibold hidden lg:block text-base lg:text-lg text-bv-black mt-2 w-full transition-opacity duration-500 ease-in-out overflow-hidden overflow-ellipsis whitespace-nowrap;
+}
+
+.cityControls {
+    @apply flex justify-center mx-auto mt-5 gap-2.5 w-3/4;
+}
+
+.cityControlButton {
+    @apply hidden lg:flex w-1/5 bg-bv-black border-2 rounded-lg p-2.5 cursor-pointer flex flex-col items-center 
+    transition duration-300 ease-in-out;
+}
+
+.cityControlButton:hover {
+    @apply bg-bv-black-200;
+}
+
+.cityControlButton.active {
+    @apply bg-bv-black-200;
+}
+
+.cityControlImage {
+    @apply w-auto h-8 lg:h-16 mb-1 transition duration-300 ease-in-out;
+}
+
+.cityLabel {
+    @apply text-base text-bv-white;
+}
+
+.viewPropertiesLink{
+    @apply w-4/6;
+}

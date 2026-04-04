@@ -1,0 +1,34 @@
+/* resources/css/Table.module.css */
+.table {
+    @apply w-full border-collapse mb-5;
+}
+
+.table th,
+.table td {
+    @apply border border-bv-black-200 p-3 text-left;
+}
+
+.table th {
+    @apply bg-bv-black text-bv-white;
+}
+
+.moreInfo {
+    @apply mt-5 p-4 border border-bv-black-200 bg-bv-white;
+}
+
+.moreInfo p {
+    @apply my-1;
+}
+
+.closeButton {
+    @apply bg-bv-orange-500 text-bv-white border-none px-3 py-2 cursor-pointer transition duration-300;
+}
+
+.closeButton:hover {
+    @apply bg-bv-orange-600;
+}
+
+.table button {
+    width: fit-content;
+    @apply py-4 px-8;
+}

@@ -1,0 +1,34 @@
+.SectionTitle {
+    @apply py-20;
+    width: fit-content;
+}
+
+.SectionTitle h2{
+    @apply font-medium;
+    font-family: 'Times New Roman';
+}
+
+.SectionTitle.darkness h2 {
+    @apply text-bv-black;
+}
+
+.SectionTitle.brightness h2, .SectionTitle.brightness h3{
+    @apply text-bv-white;
+}
+
+.SectionTitle h3{
+    @apply px-8 py-4 text-bv-black;
+}
+
+@media(min-width: 768px) {
+    .ShadowText {
+        text-shadow: 0px 0px 5px #000000f0;
+    }
+}
+
+.ShadowText {
+    @apply lg:translate-x-32 text-bv-black absolute;
+    right: .1rem;
+    text-shadow: 0px 0px 20px #00000078;
+    width: max-content;
+}

@@ -1,0 +1,90 @@
+.innerClockWiseCarousel{
+  @apply flex gap-4;
+}
+
+.embla__slide a{
+  @apply w-full;
+}
+
+.nav {
+  @apply relative py-8 flex justify-center gap-4;
+}
+
+.card-text {
+  @apply block w-[99%] overflow-ellipsis overflow-hidden whitespace-nowrap;
+}
+
+.carousel-content {
+  @apply flex gap-4 justify-between items-start py-8;
+}
+
+.card {
+  @apply w-full bg-opacity-100 rounded-2xl shadow-xl relative transition-all duration-500 ease-linear;
+}
+
+.card.center{
+  @apply -top-16;
+}
+
+.card-image {
+  @apply h-48 rounded-tl-xl rounded-tr-xl;
+}
+
+.card h3 {
+  font-family: Arial;
+  @apply w-full text-xl;
+}
+
+.status {
+  @apply absolute text-lg top-2 left-2 bg-bv-black bg-opacity-50 rounded-md shadow-xl shadow-black/10 backdrop-blur-md py-2 px-4;
+}
+
+.cardInfo {
+  @apply bg-bv-black-200 p-4 flex flex-col;
+}
+
+.cardDetails {
+  @apply bg-bv-white-200 rounded-bl-xl rounded-br-xl pt-8 pb-16 px-4;
+}
+
+.cardDetails p {
+  @apply flex justify-between;
+}
+
+.cardDetails p span.detailsKey {
+  @apply text-bv-black font-semibold flex gap-2;
+}
+
+.cardDetails p span.detailsKey svg,
+.cardDetails p span.detailsKey path {
+  @apply fill-bv-black;
+}
+
+.cardDetails p span.detailsValue {
+  @apply text-bv-black font-medium;
+}
+
+.outClockWiseCarousel{
+  @apply relative overflow-hidden;
+}
+
+.clockWiseCarouselNav span svg{
+@apply w-12 h-12;
+}
+
+.clockWiseCarouselNav span svg, .clockWiseCarouselNav span svg path{
+  @apply text-bv-black;
+}
+
+.clockWiseLeftArrow{
+  @apply absolute inset-y-2/4 left-0;
+}
+.clockWiseRightArrow{
+  @apply absolute inset-y-2/4 right-0;
+}
+
+.current{
+  @apply relative -top-16;
+}
+
+/* Animações */

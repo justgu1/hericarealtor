@@ -1,0 +1,25 @@
+.SocialIcons ul {
+    @apply z-50 flex fixed bottom-0 left-0 right-0 md:left-auto justify-center md:bottom-auto md:top-2/4 md:right-4 -translate-y-2/4 md:flex-col gap-4;
+}
+
+.SocialIcons a {
+    @apply p-2 block bg-bv-white border border-0 rounded-lg relative overflow-hidden transition-all duration-500 ease-in-out;
+}
+
+.SocialIcons a:hover{
+    @apply bg-transparent;
+}
+
+.SocialIcons a::before {
+    content: "";
+    @apply absolute inset-0 bg-bv-gradient opacity-0 transition-opacity duration-500 ease-in-out;
+    z-index: -1;
+}
+
+.SocialIcons a:hover::before {
+    @apply opacity-100;
+}
+
+.SocialIcons a svg {
+    @apply relative z-10 w-4 h-auto md:w-8;
+}

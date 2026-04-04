@@ -1,0 +1,82 @@
+.Header {
+    @apply col-span-12   py-4 grid grid-cols-12 bg-bv-black z-10 shadow-lg shadow-bv-orange/5;
+}
+
+.Authenticated {
+    @apply grid grid-cols-12 auto-rows-min;
+}
+
+.Section {
+    @apply col-span-10 col-start-2 py-12;
+}
+
+.PageActions ul {
+    @apply justify-start;
+}
+
+.ActiveTab{
+    @apply bg-bv-white text-black;
+}
+
+.ActiveTab:hover{
+    @apply text-bv-white;
+}
+
+.TableHead {
+    @apply flex gap-4 py-8 items-center justify-between w-full flex-wrap;
+}
+
+.StatusNav ul {
+    @apply flex gap-4;
+}
+
+.TableHead .SearchForm {
+    @apply flex items-end gap-2;
+    width: min-content;
+}
+
+.TableHead .SearchSubmit {
+    padding: .65rem;
+}
+
+.TableHead .Filters {
+    @apply w-full;
+}
+
+.FormFooter {
+    @apply mt-6 flex justify-between;
+}
+
+button.Principal,
+button.Secondary {
+    width: fit-content;
+}
+
+.Rightcolumn {
+    @apply fixed right-4 top-16 w-1/4 p-4 bg-bv-black-400 rounded-md border shadow-lg shadow-bv-orange/5;
+}
+
+.Previews {
+    @apply w-full m-auto pb-4;
+}
+
+.ThumbnailPreview{
+    @apply pb-4;
+}
+
+.GalleryPreview {
+    @apply w-full m-auto pb-4 flex flex-wrap gap-2 overflow-y-scroll h-32;
+}
+
+.GalleryPreview .ImageContainer {
+    @apply h-auto relative border rounded-md;
+    width: calc(50% - 0.25rem);
+}
+
+.GalleryPreview .ImageContainer img {
+    @apply h-auto w-full;
+}
+
+.ImageContainer .RemoveButton {
+    @apply absolute top-1 right-1 w-6 h-6 p-1 flex items-center justify-center text-xs bg-bv-black-100;
+}
