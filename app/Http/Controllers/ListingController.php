@@ -84,10 +84,18 @@ class ListingController extends Controller
         ]);
     }
 
-    public function pdf(Request $request)
+    public function pdf(Request $request, $listing = null)
     {
         try {
-            $listing = $request->input('listing');
+            // GET via /properties/{id}/pdf or POST with body
+            if ($listing) {
+                $model = \App\Models\Listing::with(['amenities', 'generalFeatures', 'internalFeatures', 'externalFeatures', 'gallery'])->findOrFail($listing);
+                $listing = $model->toArray();
+                // Remap gallery to expected structure
+                $listing['gallery'] = $model->gallery->map(fn($g) => ['image_url' => $g->image_url])->toArray();
+            } else {
+                $listing = $request->input('listing');
+            }
 
             if (!$listing || !isset($listing['address'])) {
                 throw new \Exception('Listing data is missing or invalid');

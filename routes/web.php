@@ -52,6 +52,7 @@ Route::get('/getProperties', [ListingController::class, "getProperties"])->name(
 Route::get('/properties/{listing}', [ListingController::class, "show"])->name('properties.show');
 
 Route::post('/properties/pdf', [ListingController::class, 'pdf'])->name('properties.pdf');
+Route::get('/properties/{listing}/pdf', [ListingController::class, 'pdf'])->name('properties.pdf.get');
 
 Route::get('/neighborhood', function () {
     return Inertia::render('Neighborhood/index');

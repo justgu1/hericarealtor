@@ -9,7 +9,7 @@ import Select from "react-select";
 import Swal from 'sweetalert2';
 import { useFilters } from "@/Contexts/FilterContext";
 
-export default function Listings({ apiKey, listings, pagination, onPageChange }) {
+export default function Listings({ apiKey, listings, pagination, onPageChange, loading = false }) {
     const swal = withReactContent(Swal);
     const { filters, updateFilters } = useFilters();
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -248,7 +248,7 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
                     </div>
                 </div>
 
-                <div className="looping">
+                <div className={`looping${loading ? ' opacity-50 pointer-events-none' : ''}`}>
                     {sortedListings.map((listing, index) => (
                         isDesktop ? (
                             <div

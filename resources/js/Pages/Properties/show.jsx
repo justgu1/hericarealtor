@@ -54,36 +54,8 @@ export default function PropertiesShow(backendProps) {
         }));
     };
 
-    const handleGetPDF = async () => {
-        // Open tab synchronously to avoid popup blocker
-        const newTab = window.open('', '_blank');
-        try {
-            Swal.fire({
-                allowOutsideClick: false,
-                background: "transparent",
-                showConfirmButton: false,
-                didOpen: () => { Swal.showLoading(); },
-            });
-
-            const response = await axios.post(route('properties.pdf'), { listing }, {
-                responseType: 'blob',
-            });
-
-            const fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-            newTab.location.href = fileURL;
-            setTimeout(() => URL.revokeObjectURL(fileURL), 30000);
-
-            Swal.close();
-        } catch (error) {
-            newTab.close();
-            Swal.close();
-            console.error('Erro ao gerar PDF:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Unable to generate PDF. Please try again later.',
-            });
-        }
+    const handleGetPDF = () => {
+        window.open(route('properties.pdf.get', listing.id), '_blank');
     };
 
     // Preload all images on mount

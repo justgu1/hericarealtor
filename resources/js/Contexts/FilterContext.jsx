@@ -37,13 +37,16 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
         total: initialPagination.total || 0,
         per_page: initialPagination.per_page || 10,
     });
+    const [loading, setLoading] = useState(false);
+    // null = never fetched, false = fetched, true = fetched with results
+    const hasFetchedRef = useRef(false);
 
-    // Ref to always have the current filters without stale closures
     const filtersRef = useRef(filters);
 
     const fetchListings = useCallback(async (params) => {
+        setLoading(true);
         try {
-            const { data } = await axios.get(route('getProperties'), {
+            const { data } = await axios.get('/getProperties', {
                 params: {
                     search: params.search,
                     city: params.city,
@@ -65,12 +68,14 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
                     page: params.page,
                 },
             });
-            setListings(data.data);
-            setPagination(data.pagination);
+            hasFetchedRef.current = true;
+            setListings(data.data ?? []);
+            setPagination(data.pagination ?? pagination);
             return data;
         } catch (error) {
-            console.error('Erro ao buscar listings:', error);
-            throw error;
+            console.error('[FilterContext] fetchListings error:', error);
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -85,7 +90,6 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
         return fetchListings(updatedFilters);
     }, [fetchListings]);
 
-    // Load on mount only if no server data provided
     useEffect(() => {
         if (listings.length === 0 && initialListings.length === 0) {
             fetchListings(filtersRef.current);
@@ -93,7 +97,7 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
     }, []);
 
     return (
-        <FilterContext.Provider value={{ filters, updateFilters, listings, pagination }}>
+        <FilterContext.Provider value={{ filters, updateFilters, listings, pagination, loading, hasFetched: hasFetchedRef.current }}>
             {children}
         </FilterContext.Provider>
     );
