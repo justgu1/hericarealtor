@@ -684,19 +684,25 @@ class ListingController extends Controller
         if ($filters['max_price'] < 100000000) {
             $query->where('price', '<=', $filters['max_price']);
         }
-        if (!empty($filters['status'])) {
-            $statusValues = is_array($filters['status']) ? $filters['status'] : explode(',', $filters['status']);
+        $statusRaw = $filters['status'];
+        $hasStatus = is_array($statusRaw) ? count($statusRaw) > 0 : (is_string($statusRaw) && strlen($statusRaw) > 0);
+        if ($hasStatus) {
+            $statusValues = is_array($statusRaw) ? $statusRaw : explode(',', $statusRaw);
             $query->whereIn('status', array_map('intval', $statusValues));
         } else {
             // By default, exclude sold (past sales) from public search
             $query->where('status', '!=', ListingStatusEnum::sold->value);
         }
-        if (!empty($filters['type'])) {
-            $typeValues = is_array($filters['type']) ? $filters['type'] : explode(',', $filters['type']);
+        $typeRaw = $filters['type'];
+        $hasType = is_array($typeRaw) ? count($typeRaw) > 0 : (is_string($typeRaw) && strlen($typeRaw) > 0);
+        if ($hasType) {
+            $typeValues = is_array($typeRaw) ? $typeRaw : explode(',', $typeRaw);
             $query->whereIn('type', array_map('intval', $typeValues));
         }
-        if (!empty($filters['transactionType'])) {
-            $transactionValues = is_array($filters['transactionType']) ? $filters['transactionType'] : explode(',', $filters['transactionType']);
+        $txRaw = $filters['transactionType'];
+        $hasTx = is_array($txRaw) ? count($txRaw) > 0 : (is_string($txRaw) && strlen($txRaw) > 0);
+        if ($hasTx) {
+            $transactionValues = is_array($txRaw) ? $txRaw : explode(',', $txRaw);
             $query->whereIn('transaction_type', array_map('intval', $transactionValues));
         }
 

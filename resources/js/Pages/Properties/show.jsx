@@ -55,6 +55,8 @@ export default function PropertiesShow(backendProps) {
     };
 
     const handleGetPDF = async () => {
+        // Open tab synchronously to avoid popup blocker
+        const newTab = window.open('', '_blank');
         try {
             Swal.fire({
                 allowOutsideClick: false,
@@ -67,19 +69,13 @@ export default function PropertiesShow(backendProps) {
                 responseType: 'blob',
             });
 
-            const file = new Blob([response.data], { type: 'application/pdf' });
-            const fileURL = URL.createObjectURL(file);
-            const link = document.createElement('a');
-            link.href = fileURL;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(() => URL.revokeObjectURL(fileURL), 10000);
+            const fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+            newTab.location.href = fileURL;
+            setTimeout(() => URL.revokeObjectURL(fileURL), 30000);
 
             Swal.close();
         } catch (error) {
+            newTab.close();
             Swal.close();
             console.error('Erro ao gerar PDF:', error);
             Swal.fire({
@@ -382,17 +378,17 @@ export default function PropertiesShow(backendProps) {
                     >
                         <MdKeyboardDoubleArrowRight />
                     </button>
-                    <div
-                        className="flex gap-2 mt-4 overflow-x-auto max-w-[90vw] pb-2"
+            <div
+                        className="flex gap-2 mt-4 overflow-x-auto max-w-[90vw] pb-2 px-4"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {images.map((src, idx) => (
                             <button
                                 key={idx}
                                 onClick={(e) => { e.stopPropagation(); setLightboxIndex(idx); }}
-                                className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${idx === lightboxIndex ? 'border-yellow-400 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}
+                                style={{ padding: 0, background: 'none', border: 'none', flexShrink: 0, width: 72, height: 54, borderRadius: 4, overflow: 'hidden', outline: idx === lightboxIndex ? '2px solid #c9a84c' : '2px solid transparent', opacity: idx === lightboxIndex ? 1 : 0.75, cursor: 'pointer' }}
                             >
-                                <img src={src} alt={`thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                                <img src={src} alt={`thumb ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                             </button>
                         ))}
                     </div>
