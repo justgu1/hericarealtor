@@ -60,8 +60,8 @@ jobs:
           cd /tmp/infra
           git config user.email "ci@hericarealtor.com"
           git config user.name "GitHub Actions"
-          sed -i "s|tag:.*|tag: ${SHA_TAG}|" apps/hericarealtor/jobs/listings-updater/values.yaml
+          sed -i "s|HERICAREALTOR_TAG=.*|HERICAREALTOR_TAG=${SHA_TAG}|" .env.example || true
           git diff --quiet && echo "No changes" && exit 0
-          git add apps/hericarealtor/jobs/listings-updater/values.yaml
+          git add .env.example
           git commit -m "chore(listings-updater): update image tag to ${SHA_TAG} [ci skip]"
           git push
