@@ -191,7 +191,7 @@ export default function PropertiesShow(backendProps) {
                     </div>
                 )}
 
-
+                <div className="grid grid-cols-12 pt-4">
                     <div className="content col-span-12 lg:col-span-7">
                         <div className="description">
                             <div className="pag1" dangerouslySetInnerHTML={{ __html: firstPartOfDescription }}></div>
