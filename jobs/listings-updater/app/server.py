@@ -94,6 +94,9 @@ def _run_job() -> None:
 
             total_new = sum(v for k, v in results.items() if k in ("for_sale", "for_rent", "sold"))
             logger.info(f"Scrape complete — {total_new} total new listings")
+
+            # Always notify Laravel to sync existing listings (prices, status, details)
+            _notify_laravel(total_new)
         finally:
             close_browser(driver, display)
             storage.close()
