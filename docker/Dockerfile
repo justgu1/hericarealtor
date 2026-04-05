@@ -1,5 +1,5 @@
 # ── Build stage ───────────────────────────────────────────────────────────────
-FROM php:8.2-fpm AS build
+FROM php:8.2-cli AS build
 
 ARG APP_ENV=production
 
@@ -28,7 +28,7 @@ RUN if [ "$APP_ENV" != "local" ]; then \
     fi
 
 # Stage 2: runtime
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 ARG APP_ENV=production
 
@@ -39,9 +39,9 @@ WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y supervisor libpq-dev libpng-dev libjpeg-dev libfreetype6-dev libzip-dev libonig-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_pgsql gd zip mbstring exif \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+    && docker-php-ext-install pdo_pgsql gd zip mbstring exif pcntl bcmath \
+    && pecl install redis swoole \
+    && docker-php-ext-enable redis swoole \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /var/www /var/www
@@ -58,6 +58,6 @@ RUN chmod +x /usr/local/bin/start
 
 USER appuser
 
-EXPOSE 9000
+EXPOSE 8000
 
 CMD ["/usr/local/bin/start"]
