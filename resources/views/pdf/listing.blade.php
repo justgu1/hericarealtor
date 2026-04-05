@@ -211,19 +211,34 @@
     <!-- Página 2: Gallery -->
     <div class="gallery">
         <h2>Gallery</h2>
+        @php
+            $allImages = collect($listing['gallery'])->filter(fn($g) => !empty($g['image_url']))->values();
+            $maxShow = 9;
+            $total = $allImages->count();
+            $remaining = $total - $maxShow;
+            $showImages = $allImages->take($maxShow);
+        @endphp
         <table>
+            @foreach($showImages->chunk(3) as $rowIndex => $row)
             <tr>
-                @foreach($listing['gallery'] as $index => $image)
-                    <td><img src="{{ $image['image_url'] ?? '' }}" alt="Gallery Image"></td>
-                    @if(($index + 1) % 3 == 0 && $index + 1 < count($listing['gallery']))
-                        </tr><tr>
+                @foreach($row as $colIndex => $image)
+                    @php $globalIndex = $rowIndex * 3 + $colIndex; @endphp
+                    @if($globalIndex === $maxShow - 1 && $remaining > 0)
+                        <td style="position:relative;">
+                            <img src="{{ $image['image_url'] }}" alt="Gallery Image" style="filter:brightness(0.4);">
+                            <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+                                <span style="color:#fff;font-size:28px;font-weight:bold;">+{{ $remaining }}</span>
+                            </div>
+                        </td>
+                    @else
+                        <td><img src="{{ $image['image_url'] }}" alt="Gallery Image"></td>
                     @endif
                 @endforeach
-                @while(count($listing['gallery']) % 3 != 0)
+                @for($p = $row->count(); $p < 3; $p++)
                     <td></td>
-                    @php $listing['gallery'][] = null; @endphp
-                @endwhile
+                @endfor
             </tr>
+            @endforeach
         </table>
     </div>
     <div class="page-break"></div>
