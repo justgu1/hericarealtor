@@ -649,6 +649,7 @@ class ListingController extends Controller
             'status' => $request->input('status', []),
             'type' => $request->input('type', []),
             'transactionType' => $request->input('transactionType', []),
+            'orderBy' => $request->input('orderBy'),
             'amenities' => $request->input('amenities', []),
             'general_features' => $request->input('general_features', []),
             'internal_features' => $request->input('internal_features', []),
@@ -708,7 +709,16 @@ class ListingController extends Controller
 
         $listings = $query
             ->orderByRaw("CASE WHEN status = 4 THEN 1 ELSE 0 END ASC")
-            ->orderBy('updated_at', 'desc')
+            ->when($filters['orderBy'] ?? null, function ($q, $order) {
+                match ($order) {
+                    'lowest_price'  => $q->orderBy('price', 'asc'),
+                    'highest_price' => $q->orderBy('price', 'desc'),
+                    'newest'        => $q->orderBy('created_at', 'desc'),
+                    'beds'          => $q->orderBy('bedrooms', 'desc'),
+                    'baths'         => $q->orderBy('bathrooms', 'desc'),
+                    default         => $q->orderBy('updated_at', 'desc'),
+                };
+            }, fn ($q) => $q->orderBy('updated_at', 'desc'))
             ->paginate(10);
 
         return response()->json([

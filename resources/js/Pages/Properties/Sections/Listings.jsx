@@ -99,29 +99,13 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
 
     const [mapInstance, setMapInstance] = useState(null);
     const [hoveredMarker, setHoveredMarker] = useState(null);
-    const [sortOption, setSortOption] = useState("");
     const [mapCenter, setMapCenter] = useState(defaultCenter);
 
     const handleSortChange = (selectedOption) => {
-        setSortOption(selectedOption.value);
+        updateFilters({ orderBy: selectedOption ? selectedOption.value : '', page: 1 });
     };
 
-    const sortedListings = [...listings].sort((a, b) => {
-        switch (sortOption) {
-            case "lowest_price":
-                return a.price - b.price;
-            case "highest_price":
-                return b.price - a.price;
-            case "newest":
-                return new Date(b.created_at) - new Date(a.created_at);
-            case "beds":
-                return b.bedrooms - a.bedrooms;
-            case "baths":
-                return b.bathrooms - a.bathrooms;
-            default:
-                return 0;
-        }
-    });
+    const sortedListings = [...listings];
 
     const formatPrice = (price) => {
         return new Intl.NumberFormat("en-US", {
@@ -235,19 +219,16 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
             <div className="loopingContainer">
                 <div className="orderLooping">
                     <div className="total">Over {pagination.total} Listings</div>
-                    <Select
-                        id="orderSort"
-                        name="orderSort"
-                        options={OrderOptions}
-                        classNamePrefix="react-select"
-                        placeholder="Sort by..."
-                        onChange={handleSortChange}
-                    />
-                </div>
-
-                {/* ── Transaction type filter ── */}
-                <div className="listingFilters">
-                    <div className="filterGroup">
+                    <div className="listingFilters">
+                        <Select
+                            id="orderSort"
+                            name="orderSort"
+                            options={OrderOptions}
+                            classNamePrefix="react-select"
+                            placeholder="Sort by..."
+                            isClearable
+                            onChange={handleSortChange}
+                        />
                         <Select
                             isMulti
                             options={transactionOptions}
@@ -256,8 +237,6 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
                             value={transactionOptions.filter(o => activeTransactionFilters.includes(o.value))}
                             onChange={handleTransactionSelect}
                         />
-                    </div>
-                    <div className="filterGroup">
                         <Select
                             isMulti
                             options={statusOptions}

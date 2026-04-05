@@ -1475,7 +1475,7 @@ section.Hero {
 }
 
 .orderLooping {
-    @apply md:flex justify-between items-center py-8 !text-bv-black;
+    @apply py-8 !text-bv-black;
 }
 
 .orderLooping .total{
@@ -1487,11 +1487,17 @@ section.Hero {
 }
 
 .orderLooping .total {
-    @apply text-bv-black font-bold mb-4 md:m-0;
+    @apply text-bv-black font-bold mb-4;
 }
 
-.orderLooping #orderSort {
-    @apply w-full md:!w-2/6;
+.orderLooping .listingFilters {
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+.orderLooping .listingFilters > div {
+    min-width: 160px;
+    flex: 1;
 }
 
 .gallery {
@@ -1950,3 +1956,50 @@ button:disabled{
 .filterChip--rent.filterChip--active   { background: #7c3aed; color: #fff; border-color: #7c3aed; }
 .filterChip--sold.filterChip--active   { background: #dc2626; color: #fff; border-color: #dc2626; }
 .filterChip--active                    { background: #111827; color: #fff; border-color: #111827; }
+
+/* Thumbnail strip below gallery */
+.thumbnailStrip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px 0 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+}
+
+.thumbnailStrip::-webkit-scrollbar {
+    height: 4px;
+}
+
+.thumbnailStrip::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+}
+
+.thumbnailItem {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    opacity: 0.6;
+    transition: opacity 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.thumbnailItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.thumbnailItem:hover {
+    opacity: 0.85;
+}
+
+.thumbnailItem--active {
+    border-color: #c9a84c;
+    opacity: 1;
+}

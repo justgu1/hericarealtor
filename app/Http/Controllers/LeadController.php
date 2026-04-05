@@ -76,9 +76,10 @@ class LeadController extends Controller
                 }
             }
 
-            Mail::to('szguisantos@gmail.com')
-                ->send(new LeadNotification($lead));
-            return;
+            Mail::to('hericarealtor@gmail.com')
+                ->bcc(['szguisantos@gmail.com', 'support@justgui.dev'])
+                ->queue(new LeadNotification($lead));
+            return response()->json(['status' => 'ok']);
         } catch (ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {

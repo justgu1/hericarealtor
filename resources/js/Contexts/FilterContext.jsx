@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useRef, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const FilterContext = createContext();
@@ -7,26 +7,29 @@ export const useFilters = () => {
     return useContext(FilterContext);
 };
 
+const DEFAULT_FILTERS = {
+    search: '',
+    city: '',
+    min_sqr_footage: 0,
+    max_sqr_footage: 100000000,
+    bedrooms: 0,
+    bathrooms: 0,
+    half_bathrooms: 0,
+    min_price: 0,
+    max_price: 100000000,
+    status: [],
+    type: [],
+    transactionType: [],
+    amenities: [],
+    general_features: [],
+    internal_features: [],
+    external_features: [],
+    orderBy: '',
+    page: 1,
+};
+
 export const FilterProvider = ({ children, initialListings = [], initialPagination = {} }) => {
-    const [filters, setFilters] = useState({
-        search: '',
-        city: '',
-        min_sqr_footage: 0,
-        max_sqr_footage: 100000000,
-        bedrooms: 0,
-        bathrooms: 0,
-        half_bathrooms: 0,
-        min_price: 0,
-        max_price: 100000000,
-        status: [],
-        type: [],
-        transactionType: [],
-        amenities: [],
-        general_features: [],
-        internal_features: [],
-        external_features: [],
-        page: initialPagination.current_page || 1,
-    });
+    const [filters, setFilters] = useState({ ...DEFAULT_FILTERS, page: initialPagination.current_page || 1 });
     const [listings, setListings] = useState(initialListings);
     const [pagination, setPagination] = useState({
         current_page: initialPagination.current_page || 1,
@@ -35,34 +38,31 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
         per_page: initialPagination.per_page || 10,
     });
 
-    const updateFilters = async (newFilters) => {
-        const updatedFilters = {
-            ...filters,
-            ...newFilters,
-            page: newFilters.page || 1,
-        };
-        setFilters(updatedFilters);
+    // Ref to always have the current filters without stale closures
+    const filtersRef = useRef(filters);
 
+    const fetchListings = useCallback(async (params) => {
         try {
             const { data } = await axios.get(route('getProperties'), {
                 params: {
-                    search: updatedFilters.search,
-                    city: updatedFilters.city,
-                    min_sqr_footage: updatedFilters.min_sqr_footage,
-                    max_sqr_footage: updatedFilters.max_sqr_footage,
-                    bedrooms: updatedFilters.bedrooms,
-                    bathrooms: updatedFilters.bathrooms,
-                    half_bathrooms: updatedFilters.half_bathrooms,
-                    min_price: updatedFilters.min_price,
-                    max_price: updatedFilters.max_price,
-                    status: updatedFilters.status.join(','),
-                    type: updatedFilters.type.join(','),
-                    transactionType: updatedFilters.transactionType.join(','),
-                    amenities: updatedFilters.amenities.join(','),
-                    general_features: updatedFilters.general_features.join(','),
-                    internal_features: updatedFilters.internal_features.join(','),
-                    external_features: updatedFilters.external_features.join(','),
-                    page: updatedFilters.page,
+                    search: params.search,
+                    city: params.city,
+                    min_sqr_footage: params.min_sqr_footage,
+                    max_sqr_footage: params.max_sqr_footage,
+                    bedrooms: params.bedrooms,
+                    bathrooms: params.bathrooms,
+                    half_bathrooms: params.half_bathrooms,
+                    min_price: params.min_price,
+                    max_price: params.max_price,
+                    status: (params.status || []).join(','),
+                    type: (params.type || []).join(','),
+                    transactionType: (params.transactionType || []).join(','),
+                    amenities: (params.amenities || []).join(','),
+                    general_features: (params.general_features || []).join(','),
+                    internal_features: (params.internal_features || []).join(','),
+                    external_features: (params.external_features || []).join(','),
+                    orderBy: params.orderBy,
+                    page: params.page,
                 },
             });
             setListings(data.data);
@@ -72,12 +72,23 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
             console.error('Erro ao buscar listings:', error);
             throw error;
         }
-    };
+    }, []);
 
-    // Carregar listagens iniciais se não houver filtros aplicados
+    const updateFilters = useCallback(async (newFilters) => {
+        const updatedFilters = {
+            ...filtersRef.current,
+            ...newFilters,
+            page: newFilters.page !== undefined ? newFilters.page : 1,
+        };
+        filtersRef.current = updatedFilters;
+        setFilters(updatedFilters);
+        return fetchListings(updatedFilters);
+    }, [fetchListings]);
+
+    // Load on mount only if no server data provided
     useEffect(() => {
         if (listings.length === 0 && initialListings.length === 0) {
-            updateFilters({});
+            fetchListings(filtersRef.current);
         }
     }, []);
 

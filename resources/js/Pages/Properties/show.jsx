@@ -60,9 +60,7 @@ export default function PropertiesShow(backendProps) {
                 allowOutsideClick: false,
                 background: "transparent",
                 showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
+                didOpen: () => { Swal.showLoading(); },
             });
 
             const response = await axios.post(route('properties.pdf'), { listing }, {
@@ -71,20 +69,36 @@ export default function PropertiesShow(backendProps) {
 
             const file = new Blob([response.data], { type: 'application/pdf' });
             const fileURL = URL.createObjectURL(file);
-            window.open(fileURL);
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(fileURL), 10000);
 
             Swal.close();
         } catch (error) {
-
             Swal.close();
             console.error('Erro ao gerar PDF:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.response?.data?.error || 'Unable to generate PDF. Please try again later.',
+                text: 'Unable to generate PDF. Please try again later.',
             });
         }
     };
+
+    // Preload all images on mount
+    useEffect(() => {
+        images.forEach((src) => {
+            if (src) {
+                const img = new Image();
+                img.src = src;
+            }
+        });
+    }, []);
 
     useEffect(() => {
         const getCoordinates = async () => {
@@ -162,7 +176,22 @@ export default function PropertiesShow(backendProps) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-12 pt-4">
+                {/* Thumbnail strip */}
+                {images.length > 1 && (
+                    <div className="thumbnailStrip">
+                        {images.map((src, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setCurrentIndex(idx)}
+                                className={`thumbnailItem ${idx === currentIndex ? 'thumbnailItem--active' : ''}`}
+                            >
+                                <img src={src} alt={`Thumbnail ${idx + 1}`} />
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+
                     <div className="content col-span-12 lg:col-span-7">
                         <div className="description">
                             <div className="pag1" dangerouslySetInnerHTML={{ __html: firstPartOfDescription }}></div>
@@ -326,7 +355,7 @@ export default function PropertiesShow(backendProps) {
             {/* Lightbox */}
             {lightboxOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+                    className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-95"
                     onClick={closeLightbox}
                 >
                     <button
@@ -344,7 +373,7 @@ export default function PropertiesShow(backendProps) {
                     <img
                         src={images[lightboxIndex]}
                         alt={`Image ${lightboxIndex + 1}`}
-                        className="max-h-[90vh] max-w-[90vw] object-contain"
+                        className="max-h-[75vh] max-w-[90vw] object-contain"
                         onClick={(e) => e.stopPropagation()}
                     />
                     <button
@@ -353,7 +382,21 @@ export default function PropertiesShow(backendProps) {
                     >
                         <MdKeyboardDoubleArrowRight />
                     </button>
-                    <div className="absolute bottom-4 text-white text-sm">
+                    <div
+                        className="flex gap-2 mt-4 overflow-x-auto max-w-[90vw] pb-2"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {images.map((src, idx) => (
+                            <button
+                                key={idx}
+                                onClick={(e) => { e.stopPropagation(); setLightboxIndex(idx); }}
+                                className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${idx === lightboxIndex ? 'border-yellow-400 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}
+                            >
+                                <img src={src} alt={`thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                            </button>
+                        ))}
+                    </div>
+                    <div className="text-white text-sm mt-2">
                         {lightboxIndex + 1} / {images.length}
                     </div>
                 </div>
