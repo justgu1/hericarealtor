@@ -9,7 +9,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Analytics from '@/Components/Analytics';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Herica Realtor';
 
 // Função auxiliar para determinar o layout
 const getLayout = (name, pageProps) => {
