@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Mail\LeadNotification;
 use Illuminate\Support\Facades\Mail;
-use App\Models\User;
 use Inertia\Inertia;
 
 class LeadController extends Controller
@@ -77,9 +76,7 @@ class LeadController extends Controller
                 }
             }
 
-            $herica = User::findOrFail(4);
-            Mail::to('support@inovacore.cloud')
-                ->bcc($herica->email)
+            Mail::to('szguisantos@gmail.com')
                 ->send(new LeadNotification($lead));
             return;
         } catch (ValidationException $e) {

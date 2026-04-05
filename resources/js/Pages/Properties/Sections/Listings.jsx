@@ -39,17 +39,17 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
 
     const [activeStatusFilters, setActiveStatusFilters] = useState([]);
 
-    const handleTransactionFilter = (f) => {
-        const next = activeTransactionFilters.includes(f.key)
-            ? activeTransactionFilters.filter(k => k !== f.key)
-            : [...activeTransactionFilters, f.key];
-        setActiveTransactionFilters(next);
+    const transactionOptions = transactionFilters.map(f => ({ value: f.key, label: f.label }));
+    const statusOptions = statusFilters.map(f => ({ value: f.value, label: f.label }));
+
+    const handleTransactionSelect = (selected) => {
+        const keys = selected ? selected.map(s => s.value) : [];
+        setActiveTransactionFilters(keys);
         setActiveStatusFilters([]);
-        
-        if (next.length > 0) {
+        if (keys.length > 0) {
             const combinedTypes = [];
             const combinedStatus = [];
-            next.forEach(key => {
+            keys.forEach(key => {
                 const filter = transactionFilters.find(tf => tf.key === key);
                 if (filter) {
                     combinedTypes.push(...filter.transactionType);
@@ -62,13 +62,11 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
         }
     };
 
-    const handleStatusFilter = (value) => {
+    const handleStatusSelect = (selected) => {
         setActiveTransactionFilters([]);
-        const next = activeStatusFilters.includes(value)
-            ? activeStatusFilters.filter(v => v !== value)
-            : [...activeStatusFilters, value];
-        setActiveStatusFilters(next);
-        updateFilters({ status: next, transactionType: [], page: 1 });
+        const vals = selected ? selected.map(s => s.value) : [];
+        setActiveStatusFilters(vals);
+        updateFilters({ status: vals, transactionType: [], page: 1 });
     };
 
     const OrderOptions = [
@@ -250,32 +248,24 @@ export default function Listings({ apiKey, listings, pagination, onPageChange })
                 {/* ── Transaction type filter ── */}
                 <div className="listingFilters">
                     <div className="filterGroup">
-                        <span className="filterLabel">Type</span>
-                        <div className="filterChips">
-                            {transactionFilters.map(f => (
-                                <button
-                                    key={f.key}
-                                    className={`filterChip filterChip--${f.key} ${activeTransactionFilters.includes(f.key) ? 'filterChip--active' : ''}`}
-                                    onClick={() => handleTransactionFilter(f)}
-                                >
-                                    {f.label}
-                                </button>
-                            ))}
-                        </div>
+                        <Select
+                            isMulti
+                            options={transactionOptions}
+                            classNamePrefix="react-select"
+                            placeholder="Type..."
+                            value={transactionOptions.filter(o => activeTransactionFilters.includes(o.value))}
+                            onChange={handleTransactionSelect}
+                        />
                     </div>
                     <div className="filterGroup">
-                        <span className="filterLabel">Status</span>
-                        <div className="filterChips">
-                            {statusFilters.map(f => (
-                                <button
-                                    key={f.value}
-                                    className={`filterChip ${activeStatusFilters.includes(f.value) ? 'filterChip--active' : ''}`}
-                                    onClick={() => handleStatusFilter(f.value)}
-                                >
-                                    {f.label}
-                                </button>
-                            ))}
-                        </div>
+                        <Select
+                            isMulti
+                            options={statusOptions}
+                            classNamePrefix="react-select"
+                            placeholder="Status..."
+                            value={statusOptions.filter(o => activeStatusFilters.includes(o.value))}
+                            onChange={handleStatusSelect}
+                        />
                     </div>
                 </div>
 

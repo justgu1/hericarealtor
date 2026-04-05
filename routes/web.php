@@ -28,8 +28,18 @@ use Illuminate\Support\Facades\Auth;
 require __DIR__ . '/auth.php';
 
 Route::get('/', function () {
+    $forSale = Listing::where('transaction_type', 0)->where('status', '!=', 4)->latest()->take(3)->get();
+    $remaining = 3 - $forSale->count();
+    $forRent = $remaining > 0
+        ? Listing::where('transaction_type', 1)->where('status', '!=', 4)->latest()->take($remaining)->get()
+        : collect();
+    $featured = $forSale->merge($forRent);
+    if ($featured->count() < 3) {
+        $sold = Listing::where('status', 4)->latest()->take(3 - $featured->count())->get();
+        $featured = $featured->merge($sold);
+    }
     return Inertia::render('Home/index', [
-        "listings" => Listing::where('status', '!=', 4)->latest()->take(10)->get(),
+        "listings" => $featured->values(),
         "posts" => Post::latest()->take(3)->get(),
         "reviews" => Review::latest()->take(10)->get(),
     ]);

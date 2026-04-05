@@ -122,6 +122,8 @@ class ListingController extends Controller
             }
 
             $pdf = Pdf::loadView('pdf.listing', compact('listing', 'schools', 'mapCenter', 'mapBase64'));
+            $pdf->setOption('isRemoteEnabled', true);
+            $pdf->setOption('isHtml5ParserEnabled', true);
 
             return response($pdf->output(), 200)
                 ->header('Content-Type', 'application/pdf')
@@ -519,6 +521,7 @@ class ListingController extends Controller
 
         $filters = [
             'search' => $request->input('search'),
+            'city' => $request->input('city'),
             'min_sqr_footage' => (int) $request->input('min_sqr_footage', 0),
             'max_sqr_footage' => (int) $request->input('max_sqr_footage', 100000000),
             'bedrooms' => (int) $request->input('bedrooms', 0),
@@ -537,6 +540,10 @@ class ListingController extends Controller
 
         if (!empty($filters['search'])) {
             $query->where('address', 'ILIKE', '%' . $filters['search'] . '%');
+        }
+        if (!empty($filters['city'])) {
+            $cityName = str_replace('_', ' ', $filters['city']);
+            $query->where('city', 'ILIKE', $cityName);
         }
         if ($filters['min_sqr_footage'] > 0) {
             $query->where('sqr_footage', '>=', $filters['min_sqr_footage']);
@@ -631,9 +638,11 @@ class ListingController extends Controller
 
         $filters = [
             'search' => $request->input('search'),
+            'city' => $request->input('city'),
             'min_sqr_footage' => (int) $request->input('min_sqr_footage', 0),
             'max_sqr_footage' => (int) $request->input('max_sqr_footage', 100000000),
-            'bedrooms' => (int) $request->input('bedrooms', 0),            'bathrooms' => (int) $request->input('bathrooms', 0),
+            'bedrooms' => (int) $request->input('bedrooms', 0),
+            'bathrooms' => (int) $request->input('bathrooms', 0),
             'half_bathrooms' => (int) $request->input('half_bathrooms', 0),
             'min_price' => (float) preg_replace('/[^0-9.]/', '', $request->input('min_price', 0)),
             'max_price' => (float) preg_replace('/[^0-9.]/', '', $request->input('max_price', 100000000)),
@@ -648,6 +657,10 @@ class ListingController extends Controller
 
         if (!empty($filters['search'])) {
             $query->where('address', 'ILIKE', '%' . $filters['search'] . '%');
+        }
+        if (!empty($filters['city'])) {
+            $cityName = str_replace('_', ' ', $filters['city']);
+            $query->where('city', 'ILIKE', $cityName);
         }
         if ($filters['min_sqr_footage'] > 0) {
             $query->where('sqr_footage', '>=', $filters['min_sqr_footage']);

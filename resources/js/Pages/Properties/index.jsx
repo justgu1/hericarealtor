@@ -1,10 +1,23 @@
 import { Head } from "@inertiajs/react";
+import { useEffect } from "react";
 import Listings from "./Sections/Listings";
 import { useFilters } from "@/Contexts/FilterContext";
 
 export default function Properties(data) {
-    const { apiKey, listings: initialListings, pagination: initialPagination } = data.props;
+    const { apiKey, listings: initialListings, pagination: initialPagination, filters: serverFilters } = data.props;
     const { listings, pagination, updateFilters } = useFilters();
+
+    useEffect(() => {
+        if (serverFilters?.city || serverFilters?.search) {
+            updateFilters({
+                city: serverFilters.city || '',
+                search: serverFilters.search || '',
+            });
+        }
+    }, []);
+
+    const displayListings = listings.length > 0 ? listings : initialListings;
+    const displayPagination = listings.length > 0 ? pagination : initialPagination;
 
     const handlePageChange = async (page) => {
         try {
@@ -18,9 +31,9 @@ export default function Properties(data) {
         <div className="page grid grid-cols-12 pt-16">
             <Head title="Properties" />
             <Listings
-                listings={listings.length > 0 ? listings : initialListings}
+                listings={displayListings}
                 apiKey={apiKey}
-                pagination={pagination.current_page ? pagination : initialPagination}
+                pagination={displayPagination}
                 onPageChange={handlePageChange}
             />
         </div>

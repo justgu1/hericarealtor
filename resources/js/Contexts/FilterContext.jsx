@@ -10,6 +10,7 @@ export const useFilters = () => {
 export const FilterProvider = ({ children, initialListings = [], initialPagination = {} }) => {
     const [filters, setFilters] = useState({
         search: '',
+        city: '',
         min_sqr_footage: 0,
         max_sqr_footage: 100000000,
         bedrooms: 0,
@@ -46,6 +47,7 @@ export const FilterProvider = ({ children, initialListings = [], initialPaginati
             const { data } = await axios.get(route('getProperties'), {
                 params: {
                     search: updatedFilters.search,
+                    city: updatedFilters.city,
                     min_sqr_footage: updatedFilters.min_sqr_footage,
                     max_sqr_footage: updatedFilters.max_sqr_footage,
                     bedrooms: updatedFilters.bedrooms,

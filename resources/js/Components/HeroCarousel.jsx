@@ -26,12 +26,10 @@ const HeroCarousel = React.forwardRef(({ height, banners, buttons, apiKey }, ref
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const queryParams = new URLSearchParams({
-            city: selectedCity,
-            address: searchQuery,
-        }).toString();
-
-        window.location.href=route('properties', queryParams);
+        const params = new URLSearchParams();
+        if (selectedCity) params.set('city', selectedCity);
+        if (searchQuery) params.set('search', searchQuery);
+        window.location.href = route('properties') + '?' + params.toString();
     };
 
     const handleCityChange = (e) => {

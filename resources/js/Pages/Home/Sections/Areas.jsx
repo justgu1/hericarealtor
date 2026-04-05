@@ -8,7 +8,7 @@ export default function Areas() {
                     { name: "Boca Raton", label: "boca_raton", img: "/img/bocaraton.jpg" },
                     { name: "Delray Beach", label: "delray_beach", img: "/img/delraybeach.jpg" },
                     { name: "Fort Lauderdale", label: "fort_lauderdale", img: "/img/fortlauderdale.jpg" },
-                    { name: "Palm Beach ", label: "palm_beach ", img: "/img/westpalm.jpg" },
+                    { name: "Palm Beach", label: "palm_beach", img: "/img/westpalm.jpg" },
                     { name: "Miami", label: "miami", img: "/img/miami.jpg" },
                 ].map((area, index) => (
                     <a
