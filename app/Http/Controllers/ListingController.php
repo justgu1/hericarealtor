@@ -107,25 +107,24 @@ class ListingController extends Controller
             $mapBase64 = '';
 
             if ($apiKey) {
-                $result    = $this->getNearbySchools($listing['address']);
-                $schools   = $result['schools'];
-                $mapCenter = $result['mapCenter'];
+                // Static map using address directly (no geocode needed)
+                $encodedAddress = urlencode($listing['address']);
+                $mapUrl = "https://maps.googleapis.com/maps/api/staticmap?"
+                    . "center={$encodedAddress}&zoom=14&size=600x300"
+                    . "&markers=color:red|label:P|{$encodedAddress}"
+                    . "&key={$apiKey}";
+                $mapResponse = Http::timeout(15)->get($mapUrl);
+                if ($mapResponse->successful()) {
+                    $mapBase64 = 'data:image/png;base64,' . base64_encode($mapResponse->body());
+                }
 
-                if ($mapCenter['lat'] !== 0) {
-                    $base    = "https://maps.googleapis.com/maps/api/staticmap?";
-                    $center  = urlencode($mapCenter['lat'] . ',' . $mapCenter['lng']);
-                    $markers = "markers=color:red|label:P|" . urlencode($mapCenter['lat'] . ',' . $mapCenter['lng']);
-                    $schoolCount = 0;
-                    foreach ($schools as $school) {
-                        if ($schoolCount >= 5) break;
-                        $markers .= "&markers=color:blue|label:S|" . urlencode($school['geometry']['location']['lat'] . ',' . $school['geometry']['location']['lng']);
-                        $schoolCount++;
-                    }
-                    $mapUrl      = $base . "center=" . $center . "&zoom=14&size=600x300&" . $markers . "&key=" . $apiKey;
-                    $mapResponse = Http::get($mapUrl);
-                    if ($mapResponse->successful()) {
-                        $mapBase64 = 'data:image/png;base64,' . base64_encode($mapResponse->body());
-                    }
+                // Try to get nearby schools (optional, won't break if it fails)
+                try {
+                    $result = $this->getNearbySchools($listing['address']);
+                    $schools = $result['schools'];
+                    $mapCenter = $result['mapCenter'];
+                } catch (\Exception $e) {
+                    Log::warning('getNearbySchools failed: ' . $e->getMessage());
                 }
             }
 
@@ -697,10 +696,8 @@ class ListingController extends Controller
         if ($hasStatus) {
             $statusValues = is_array($statusRaw) ? $statusRaw : explode(',', $statusRaw);
             $query->whereIn('status', array_map('intval', $statusValues));
-        } else {
-            // By default, exclude sold (past sales) from public search
-            $query->where('status', '!=', ListingStatusEnum::sold->value);
         }
+        // No default filter — show all when nothing selected
         $typeRaw = $filters['type'];
         $hasType = is_array($typeRaw) ? count($typeRaw) > 0 : (is_string($typeRaw) && strlen($typeRaw) > 0);
         if ($hasType) {
