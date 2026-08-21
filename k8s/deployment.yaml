@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hericarealtor
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hericarealtor
+  template:
+    metadata:
+      labels:
+        app: hericarealtor
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull
+      containers:
+        - name: hericarealtor
+          image: ghcr.io/justgu1/hericarealtor:latest
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: hericarealtor-config
+            - secretRef:
+                name: hericarealtor-secrets
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 20

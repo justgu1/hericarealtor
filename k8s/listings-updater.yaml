@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hericarealtor-listings-updater
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hericarealtor-listings-updater
+  template:
+    metadata:
+      labels:
+        app: hericarealtor-listings-updater
+    spec:
+      containers:
+        - name: listings-updater
+          image: ghcr.io/justgu1/hericarealtor-listings-updater:latest
+          ports:
+            - name: http
+              containerPort: 8001
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hericarealtor-secrets
+                  key: LISTINGS_DATABASE_URL
+          envFrom:
+            - secretRef:
+                name: hericarealtor-listings-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hericarealtor-listings-updater
+  namespace: apps
+spec:
+  selector:
+    app: hericarealtor-listings-updater
+  ports:
+    - name: http
+      port: 8001
+      targetPort: http
