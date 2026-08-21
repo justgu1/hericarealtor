@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hericarealtor-config
+  namespace: apps
+data:
+  APP_NAME: HericaRealtor
+  APP_ENV: production
+  APP_DEBUG: "false"
+  APP_URL: https://hericarealtor.com
+
+  DB_CONNECTION: pgsql
+  DB_HOST: postgresql.shared.svc.cluster.local
+  DB_PORT: "5432"
+  DB_DATABASE: hericarealtor
+  DB_USERNAME: hericarealtor
+
+  SESSION_DRIVER: redis
+  QUEUE_CONNECTION: redis
+  CACHE_STORE: redis
+  REDIS_HOST: redis-master.shared.svc.cluster.local
+  REDIS_PORT: "6379"
+  # convenção do shared: toda chave usada por esse app tem que sair com esse prefixo
+  REDIS_PREFIX: "hericarealtor_"
+
+  FILESYSTEM_DISK: s3
+  AWS_ACCESS_KEY_ID: hericarealtor
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_BUCKET: hericarealtor
+  AWS_ENDPOINT: http://minio.shared.svc.cluster.local:9000
+  AWS_USE_PATH_STYLE_ENDPOINT: "true"
+
+  MAIL_MAILER: smtp
+  MAIL_PORT: "587"
