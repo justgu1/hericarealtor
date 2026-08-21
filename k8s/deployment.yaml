@@ -13,8 +13,6 @@ spec:
       labels:
         app: hericarealtor
     spec:
-      imagePullSecrets:
-        - name: ghcr-pull
       containers:
         - name: hericarealtor
           image: ghcr.io/justgu1/hericarealtor:latest
