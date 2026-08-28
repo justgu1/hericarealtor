@@ -20,6 +20,7 @@ data:
   CACHE_STORE: redis
   REDIS_HOST: redis-master.shared.svc.cluster.local
   REDIS_PORT: "6379"
+  REDIS_USERNAME: hericarealtor
   # convenção do shared: toda chave usada por esse app tem que sair com esse prefixo
   REDIS_PREFIX: "hericarealtor_"
 
